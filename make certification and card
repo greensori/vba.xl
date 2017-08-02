@@ -157,8 +157,3 @@ Sub Clear()
 
 End Sub
 
-
-
-
-'##색상 바꾸기
-'Sheets(1).Cells(12, 12).Interior.Color = vbYellow
