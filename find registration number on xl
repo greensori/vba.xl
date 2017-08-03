@@ -5,33 +5,24 @@ Sub Find()
     Dim pt(2) As Range
     Dim pt_max(1) As Range
     Dim rno(1) As Double
+    Dim rowEnd As Double
     Dim col As Integer
+    
+    rowEnd = Sheets(2).Cells(3, 9).Value
     
     If Sheets(2).Cells(3, 6) <> "" Then
         rno(1) = Sheets(2).Cells(3, 6).Value
     End If
     If Sheets(2).Cells(3, 6) = "" Then
-        rno(1) = 2
-        Do While Sheets(2).Cells(rno(1), 1) <> ""
-            rno(1) = rno(1) + 1
-        Loop
-        If rno(1) > 2 Then
-            rno(1) = rno(1) - 1
-            Sheets(2).Cells(3, 6).Value = rno(1)
-            Set pt_max(0) = Range(Sheets(2).Cells(2, 1), Sheets(2).Cells(rno(1), 1))
-            Set pt_max(1) = Range(Sheets(2).Cells(2, 2), Sheets(2).Cells(rno(1), 2))
-            Sheets(2).Cells(3, 7).Value = Application.WorksheetFunction.Max(pt_max(0))
-            Sheets(2).Cells(3, 8).Value = Application.WorksheetFunction.Max(pt_max(1))
-        End If
+        rno(1) = Sheets(2).Cells(rowEnd, 1).End(xlUp).Row
+        Sheets(2).Cells(3, 6).Value = rno(1)
+        Set pt_max(0) = Range(Sheets(2).Cells(2, 1), Sheets(2).Cells(rno(1), 1))
+        Set pt_max(1) = Range(Sheets(2).Cells(2, 2), Sheets(2).Cells(rno(1), 2))
+        Sheets(2).Cells(3, 7).Value = Application.WorksheetFunction.Max(pt_max(0))
+        Sheets(2).Cells(3, 8).Value = Application.WorksheetFunction.Max(pt_max(1))
     End If
     
-    rno(0) = 3
-    Do While Sheets(1).Cells(rno(0), 3) <> ""
-        rno(0) = rno(0) + 1
-    Loop
-    If rno(0) > 3 Then
-        rno(0) = rno(0) - 1
-    End If
+    rno(0) = Sheets(1).Cells(rowEnd, 3).End(xlUp).Row
     
     Set pt(0) = Range(Sheets(1).Cells(3, 1), Sheets(1).Cells(rno(0), 1))
     Set pt(1) = Range(Sheets(1).Cells(3, 3), Sheets(1).Cells(rno(0), 3))
@@ -64,30 +55,26 @@ Sub Find_cert()
    '3 regtag 4certtag
     
     Dim pt(2) As Range
+    Dim pt_max(1) As Range
     Dim rno(1) As Double
+    Dim rowEnd As Double
     Dim col As Integer
     
+    rowEnd = Sheets(2).Cells(3, 9).Value
+   
     If Sheets(2).Cells(3, 6) <> "" Then
-        rno(1) = Sheets(2).Cells(3, 6).Value
-    End If
-    If Sheets(2).Cells(3, 6) = "" Then
-        rno(1) = 2
-        Do While Sheets(2).Cells(rno(1), 1) <> ""
-            rno(1) = rno(1) + 1
-        Loop
-        If rno(1) > 2 Then
-            rno(1) = rno(1) - 1
-            Sheets(2).Cells(1, 5).Value = rno(1)
+            rno(1) = Sheets(2).Cells(3, 6).Value
         End If
+    If Sheets(2).Cells(3, 6) = "" Then
+        rno(1) = Sheets(2).Cells(rowEnd, 1).End(xlUp).Row
+        Sheets(2).Cells(3, 6).Value = rno(1)
+        Set pt_max(0) = Range(Sheets(2).Cells(2, 1), Sheets(2).Cells(rno(1), 1))
+        Set pt_max(1) = Range(Sheets(2).Cells(2, 2), Sheets(2).Cells(rno(1), 2))
+        Sheets(2).Cells(3, 7).Value = Application.WorksheetFunction.Max(pt_max(0))
+        Sheets(2).Cells(3, 8).Value = Application.WorksheetFunction.Max(pt_max(1))
     End If
     
-    rno(0) = 3
-    Do While Sheets(1).Cells(rno(0), 4) <> ""
-        rno(0) = rno(0) + 1
-    Loop
-    If rno(0) > 3 Then
-        rno(0) = rno(0) - 1
-    End If
+    rno(0) = Sheets(1).Cells(rowEnd, 4).End(xlUp).Row
     
     Set pt(0) = Range(Sheets(1).Cells(3, 5), Sheets(1).Cells(rno(0), 5))
     Set pt(1) = Range(Sheets(1).Cells(3, 4), Sheets(1).Cells(rno(0), 4))
