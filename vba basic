@@ -9,7 +9,6 @@ On Error Resume Next
 Do While Sheets(1).Cells(rno(0), 1) <> ""
     If Sheets(1).Cells(rno(0), 1).Value = "#N/A" Then
         Sheets(1).Cells(rno(0), 1).Value = ""
-        Range(Sheets(2).Cells(i, 2), Sheets(2).Cells(i, 5)).ClearContents
     End If
 
 #replace word
