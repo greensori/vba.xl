@@ -28,6 +28,11 @@ Sub total()
     tempdata = Sheets(1).Cells(row(1), i).Value
     Len_totalname = Len(tempdata)
     Len_targetname = InStr(1, tempdata, " ", 0)
+    If Len_targetname = 0 Then
+        Len_targetname = Len_targetname + 1
+        Sheets(2).Cells(row(2), b).Interior.Color = vbRed
+        Sheets(2).Cells(row(2), b + 1).Interior.Color = vbRed
+    End If
     Ltempdata = Left(tempdata, Len_targetname - 1)
     Mtempdata = Right(tempdata, Len_totalname - Len_targetname)
     Rtempdata = Mtempdata
@@ -37,7 +42,6 @@ Sub total()
         Len_targetname = Len_targetname + 1
         Sheets(2).Cells(row(2), b).Interior.Color = vbRed
         Sheets(2).Cells(row(2), b + 1).Interior.Color = vbRed
-
     End If
     Mtempdata = Left(Mtempdata, Len_targetname - 1)
     Rtempdata = Right(Rtempdata, count - Len_targetname)
@@ -45,7 +49,7 @@ Sub total()
     Mtempdata = Application.WorksheetFunction.Proper(Mtempdata)
     Rtempdata = Application.WorksheetFunction.Proper(Rtempdata)
     Utempdata = UCase(Ltempdata)
-    tempdata = (Ltempdata & " " & Mtempdata & " " & Rtempdata)
+    tempdata = (Ltempdata & ", " & Mtempdata & " " & Rtempdata)
     Sheets(2).Cells(row(2), b).Value = tempdata
     b = b + 1
     tempdata = (Utempdata & " " & Mtempdata & " " & Rtempdata)
@@ -109,6 +113,7 @@ Sub total()
     tempdata = Sheets(1).Cells(row(1), i).Value
     Sheets(2).Cells(row(2), b).Value = tempdata
     b = b + 1
+    
 End Sub
 
 
@@ -124,21 +129,40 @@ Sub Main()
         Call total
         c = c + 1
     Loop
+    
+    Call Copysheet
 End Sub
 
 Sub Saves()
-    Dim strPath(2) As String
+    Dim strPath(3) As String
     Dim obs(1) As Double
     Dim countrow As Double
     
     obs(0) = Sheets(1).Cells(3, 1).Value
     countrow = Sheets(1).Cells(Rows.count, 1).End(xlUp).row
     obs(1) = Sheets(1).Cells(countrow, 1).Value
-    strPath(0) = "C:\Users\~"
+    strPath(0) = "C:\Users\건축사등록원6887\Desktop\공유\1. 건축사등록원\1__1 건축사등록_발급(등록증 등록카드)\1) 로우데이터 만들기\"
+        Sheet2.Copy
     ChDir strPath(0)
-    ActiveWorkbook.SaveAs Filename:=strPath(0) & Date & "기준 " & " #" & obs(0) & " ~ " & obs(1) & ".xlsx"
+    ActiveWorkbook.SaveAs Filename:=strPath(0) & Date & "기준 " & " #" & obs(1) & " ~ " & obs(0) & ".xlsx"
+    
+    strPath(1) = "C:\Users\건축사등록원6887\Desktop\공유\1. 건축사등록원\1__1 건축사등록_발급(등록증 등록카드)\2) 등록카드 파일\"
+        Sheet3.Copy
+    ChDir strPath(1)
+    ActiveWorkbook.SaveAs Filename:=strPath(1) & "등록카드 파일(" & obs(1) & "~" & obs(0) & ")_" & Date & "기준" & ".xlsx"
+    
+    strPath(2) = "C:\Users\건축사등록원6887\Desktop\공유\1. 건축사등록원\1__1 건축사등록_발급(등록증 등록카드)\3) 등록증 파일\"
+        Sheet4.Copy
+    ChDir strPath(2)
+    ActiveWorkbook.SaveAs Filename:=strPath(2) & Date & "기준 등록증" & " #" & obs(1) & " ~ " & obs(0) & ".xlsx"
+    
+    strPath(3) = "C:\Users\건축사등록원6887\Desktop\공유\1. 건축사등록원\1__1 건축사등록_발급(등록증 등록카드)\4) 주소록\"
+        Sheet5.Copy
+    ChDir strPath(3)
+    ActiveWorkbook.SaveAs Filename:=strPath(3) & Date & "기준 주소록" & " #" & obs(1) & " ~ " & obs(0) & ".xlsx"
+    
     MsgBox "Path : " & strPath(0) & vbCrLf & "Sheets 1 ~ 4 Saves complete"
-
+    
 End Sub
 
 Sub Clear()
@@ -154,6 +178,62 @@ Sub Clear()
     Set rng = Range(Cells(3, 1), Cells(7, 4))
     
     Sheets(1).Range(Cells(row_len(0), col_len(0)), Cells(Rows.count, Columns.count)).ClearContents
-
 End Sub
 
+
+Sub Copysheet()
+    Dim row(3) As Double
+    Dim i(1) As Integer
+    Dim f2 As String
+    Dim obs As Integer
+    
+    f2 = "건축사 귀하"
+    
+    obs = 1
+    i(0) = 3
+    i(1) = 2
+    Do While Sheets(2).Cells(i(0), 1).Value <> ""
+        'regno
+        tempdata = Sheets(2).Cells(i(0), 1).Value
+        Sheets(3).Cells(i(1), 5).Value = tempdata
+        Sheets(4).Cells(i(1), 4).Value = tempdata
+        'name
+        tempdata = Sheets(2).Cells(i(0), 3).Value
+        Sheets(3).Cells(i(1), 2).Value = tempdata
+        Sheets(3).Cells(i(1), 1).Value = obs
+        Sheets(4).Cells(i(1), 1).Value = tempdata
+        Sheets(5).Cells(i(1), 1).Value = tempdata
+        Sheets(5).Cells(i(1), 2).Value = f2
+        'eng name
+        tempdata = Sheets(2).Cells(i(0), 4).Value
+        Sheets(4).Cells(i(1), 2).Value = tempdata
+        'eng name(card
+        tempdata = Sheets(2).Cells(i(0), 5).Value
+        Sheets(3).Cells(i(1), 3).Value = tempdata
+        'cert num
+        tempdata = Sheets(2).Cells(i(0), 6).Value
+        Sheets(4).Cells(i(1), 5).Value = tempdata
+        'cert date
+        tempdata = Sheets(2).Cells(i(0), 7).Value
+        Sheets(4).Cells(i(1), 6).Value = tempdata
+        'birth date
+        tempdata = Sheets(2).Cells(i(0), 8).Value
+        Sheets(4).Cells(i(1), 3).Value = tempdata
+        Sheets(3).Cells(i(1), 4).Value = tempdata
+        'pic file
+        tempdata = Sheets(2).Cells(i(0), 9).Value
+        Sheets(3).Cells(i(1), 7).Value = tempdata
+        'expiredate
+        tempdata = Sheets(2).Cells(i(0), 11).Value
+        Sheets(4).Cells(i(1), 7).Value = tempdata
+        'zipcode address
+        tempdata = Sheets(2).Cells(i(0), 12).Value
+        Sheets(5).Cells(i(1), 3).Value = tempdata
+        tempdata = Sheets(2).Cells(i(0), 13).Value
+        Sheets(5).Cells(i(1), 4).Value = tempdata
+        i(0) = i(0) + 1
+        i(1) = i(1) + 1
+        obs = obs + 1
+    Loop
+    
+End Sub
