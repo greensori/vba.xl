@@ -1,0 +1,319 @@
+Public sht As Integer
+Public card As Integer
+
+
+
+Sub Find_reg()
+    
+    Dim pt(2) As Range
+    Dim rno(1) As Double
+    Dim col As Integer
+    ' 이름-이메일-자격번호
+    
+    rno(0) = Sheets(1).Cells(Rows.Count, 1).End(xlUp).Row
+    rno(1) = Sheets(4).Cells(5, 2).Value
+    
+    Set pt(0) = Range(Sheets(1).Cells(3, 2), Sheets(1).Cells(rno(0), 2))
+    'pt0 = result
+    Set pt(1) = Range(Sheets(1).Cells(3, 1), Sheets(1).Cells(rno(0), 1))
+    Set pt(2) = Range(Sheets(2).Cells(2, 1), Sheets(2).Cells(rno(1), 4))
+    
+    '이름
+    Sheets(1).Cells(2, 2).Value = "이름"
+    On Error Resume Next
+        pt(0) = Application.WorksheetFunction.VLookup(pt(1), pt(2), 3, 0)
+    
+    '이메일
+    Sheets(1).Cells(2, 3).Value = "Email"
+    Set pt(0) = Range(Sheets(1).Cells(3, 3), Sheets(1).Cells(rno(0), 3))
+    On Error Resume Next
+        pt(0) = Application.WorksheetFunction.VLookup(pt(1), pt(2), 4, 0)
+    
+    '자격번호
+    Sheets(1).Cells(2, 4).Value = "자격번호"
+    Set pt(0) = Range(Sheets(1).Cells(3, 4), Sheets(1).Cells(rno(0), 4))
+    On Error Resume Next
+        pt(0) = Application.WorksheetFunction.VLookup(pt(1), pt(2), 2, 0)
+    
+    'NOTIN
+    Sheets(1).Cells(2, 5).Value = "NOTIN"
+
+        
+    rno(0) = 3
+    Do While Sheets(1).Cells(rno(0), 1) <> ""
+        If Sheets(1).Cells(rno(0), 2).Value = "#N/A" Then
+            Sheets(1).Cells(rno(0), 2).Value = ""
+        End If
+        If Sheets(1).Cells(rno(0), 3).Value = "#N/A" Then
+            Sheets(1).Cells(rno(0), 3).Value = ""
+        End If
+        If Sheets(1).Cells(rno(0), 4).Value = "#N/A" Then
+            Sheets(1).Cells(rno(0), 4).Value = ""
+        End If
+        rno(0) = rno(0) + 1
+    Loop
+    
+End Sub
+
+
+Sub Find_cert()
+
+    Dim pt(2) As Range
+    Dim rno(1) As Double
+    Dim col As Integer
+    '이름 - 이메일 - 등록번호 - NOTIN
+    
+    rno(0) = Sheets(1).Cells(Rows.Count, 1).End(xlUp).Row
+    rno(1) = Sheets(4).Cells(5, 2).Value
+    
+    Set pt(0) = Range(Sheets(1).Cells(3, 2), Sheets(1).Cells(rno(0), 2))
+    'pt0 = result
+    Set pt(1) = Range(Sheets(1).Cells(3, 1), Sheets(1).Cells(rno(0), 1))
+    Set pt(2) = Range(Sheets(2).Cells(2, 2), Sheets(2).Cells(rno(1), 5))
+    
+    '이름
+    Sheets(1).Cells(2, 2).Value = "이름"
+    On Error Resume Next
+        pt(0) = Application.WorksheetFunction.VLookup(pt(1), pt(2), 2, 0)
+    
+    '이메일
+    Sheets(1).Cells(2, 3).Value = "Email"
+    Set pt(0) = Range(Sheets(1).Cells(3, 3), Sheets(1).Cells(rno(0), 3))
+    On Error Resume Next
+        pt(0) = Application.WorksheetFunction.VLookup(pt(1), pt(2), 3, 0)
+    
+    '등록번호
+    Sheets(1).Cells(2, 4).Value = "등록번호"
+    Set pt(0) = Range(Sheets(1).Cells(3, 4), Sheets(1).Cells(rno(0), 4))
+    On Error Resume Next
+        pt(0) = Application.WorksheetFunction.VLookup(pt(1), pt(2), 4, 0)
+    
+    'NOTIN
+    Sheets(1).Cells(2, 5).Value = "NOTIN"
+
+        
+    rno(0) = 3
+    Do While Sheets(1).Cells(rno(0), 1) <> ""
+        If Sheets(1).Cells(rno(0), 2).Value = "#N/A" Then
+            Sheets(1).Cells(rno(0), 2).Value = ""
+        End If
+        If Sheets(1).Cells(rno(0), 3).Value = "#N/A" Then
+            Sheets(1).Cells(rno(0), 3).Value = ""
+        End If
+        If Sheets(1).Cells(rno(0), 4).Value = "#N/A" Then
+            Sheets(1).Cells(rno(0), 4).Value = ""
+        End If
+        rno(0) = rno(0) + 1
+    Loop
+
+End Sub
+
+Sub Find2_cert()
+
+    Dim pt(2) As Range
+    Dim rno(1) As Double
+    Dim col As Integer
+    '이름 - 이메일 - NOTIN - NOTIN
+    
+    rno(0) = Sheets(1).Cells(Rows.Count, 1).End(xlUp).Row
+    rno(1) = Sheets(4).Cells(11, 2).Value
+    
+    Set pt(0) = Range(Sheets(1).Cells(3, 2), Sheets(1).Cells(rno(0), 2))
+    'pt0 = result
+    Set pt(1) = Range(Sheets(1).Cells(3, 1), Sheets(1).Cells(rno(0), 1))
+    Set pt(2) = Range(Sheets(3).Cells(2, 1), Sheets(3).Cells(rno(1), 3))
+    
+    '이름
+    Sheets(1).Cells(2, 2).Value = "이름"
+    On Error Resume Next
+        pt(0) = Application.WorksheetFunction.VLookup(pt(1), pt(2), 2, 0)
+    
+    '이메일
+    Sheets(1).Cells(2, 3).Value = "Email"
+    Set pt(0) = Range(Sheets(1).Cells(3, 3), Sheets(1).Cells(rno(0), 3))
+    On Error Resume Next
+        pt(0) = Application.WorksheetFunction.VLookup(pt(1), pt(2), 3, 0)
+    
+    'NOTIN
+    Sheets(1).Cells(2, 4).Value = "NOTIN"
+    'Set pt(0) = Range(Sheets(1).Cells(3, 4), Sheets(1).Cells(rno(0), 4))
+    'On Error Resume Next
+    '    pt(0) = Application.WorksheetFunction.VLookup(pt(1), pt(2), 4, 0)
+    
+    'NOTIN
+    Sheets(1).Cells(2, 5).Value = "NOTIN"
+
+        
+    rno(0) = 3
+    Do While Sheets(1).Cells(rno(0), 1) <> ""
+        If Sheets(1).Cells(rno(0), 2).Value = "#N/A" Then
+            Sheets(1).Cells(rno(0), 2).Value = ""
+        End If
+        If Sheets(1).Cells(rno(0), 3).Value = "#N/A" Then
+            Sheets(1).Cells(rno(0), 3).Value = ""
+        End If
+        If Sheets(1).Cells(rno(0), 4).Value = "#N/A" Then
+            Sheets(1).Cells(rno(0), 4).Value = ""
+        End If
+        rno(0) = rno(0) + 1
+    Loop
+
+End Sub
+
+
+Sub Find_Email()
+
+    Dim pt(2) As Range
+    Dim rno(1) As Double
+    Dim col As Integer
+    '이름 - 등록번호 - 자격번호- NOTIN
+    
+    rno(0) = Sheets(1).Cells(Rows.Count, 1).End(xlUp).Row
+    rno(1) = Sheets(4).Cells(5, 2).Value
+    
+    Set pt(0) = Range(Sheets(1).Cells(3, 2), Sheets(1).Cells(rno(0), 2))
+    'pt0 = result
+    Set pt(1) = Range(Sheets(1).Cells(3, 1), Sheets(1).Cells(rno(0), 1))
+    Set pt(2) = Range(Sheets(2).Cells(2, 4), Sheets(2).Cells(rno(1), 7))
+    
+    '이름
+    Sheets(1).Cells(2, 2).Value = "이름"
+    On Error Resume Next
+        pt(0) = Application.WorksheetFunction.VLookup(pt(1), pt(2), 4, 0)
+    
+    '등록번호
+    Sheets(1).Cells(2, 3).Value = "등록번호"
+    Set pt(0) = Range(Sheets(1).Cells(3, 3), Sheets(1).Cells(rno(0), 3))
+    On Error Resume Next
+        pt(0) = Application.WorksheetFunction.VLookup(pt(1), pt(2), 2, 0)
+    
+    '자격번호
+    Sheets(1).Cells(2, 4).Value = "자격번호"
+    Set pt(0) = Range(Sheets(1).Cells(3, 4), Sheets(1).Cells(rno(0), 4))
+    On Error Resume Next
+        pt(0) = Application.WorksheetFunction.VLookup(pt(1), pt(2), 3, 0)
+    
+    'NOTIN
+    Sheets(1).Cells(2, 5).Value = "NOTIN"
+
+        
+    rno(0) = 3
+    Do While Sheets(1).Cells(rno(0), 1) <> ""
+        If Sheets(1).Cells(rno(0), 2).Value = "#N/A" Then
+            Sheets(1).Cells(rno(0), 2).Value = ""
+        End If
+        If Sheets(1).Cells(rno(0), 3).Value = "#N/A" Then
+            Sheets(1).Cells(rno(0), 3).Value = ""
+        End If
+        If Sheets(1).Cells(rno(0), 4).Value = "#N/A" Then
+            Sheets(1).Cells(rno(0), 4).Value = ""
+        End If
+        rno(0) = rno(0) + 1
+    Loop
+
+End Sub
+
+Sub Find2_Email()
+
+    Dim pt(2) As Range
+    Dim rno(1) As Double
+    Dim col As Integer
+    '이름 - 등록번호 - 자격번호- NOTIN
+    
+    rno(0) = Sheets(1).Cells(Rows.Count, 1).End(xlUp).Row
+    rno(1) = Sheets(4).Cells(11, 2).Value
+    
+    Set pt(0) = Range(Sheets(1).Cells(3, 2), Sheets(1).Cells(rno(0), 2))
+    'pt0 = result
+    Set pt(1) = Range(Sheets(1).Cells(3, 1), Sheets(1).Cells(rno(0), 1))
+    Set pt(2) = Range(Sheets(3).Cells(2, 3), Sheets(3).Cells(rno(1), 5))
+    
+    '이름
+    Sheets(1).Cells(2, 2).Value = "이름"
+    On Error Resume Next
+        pt(0) = Application.WorksheetFunction.VLookup(pt(1), pt(2), 3, 0)
+    
+    '자격번호
+    Sheets(1).Cells(2, 3).Value = "자격번호"
+    Set pt(0) = Range(Sheets(1).Cells(3, 3), Sheets(1).Cells(rno(0), 3))
+    On Error Resume Next
+        pt(0) = Application.WorksheetFunction.VLookup(pt(1), pt(2), 2, 0)
+    
+    'NOTIN
+    Sheets(1).Cells(2, 4).Value = "NOTIN"
+    'Set pt(0) = Range(Sheets(1).Cells(3, 4), Sheets(1).Cells(rno(0), 4))
+    'On Error Resume Next
+    '    pt(0) = Application.WorksheetFunction.VLookup(pt(1), pt(2), 3, 0)
+    
+    'NOTIN
+    Sheets(1).Cells(2, 5).Value = "NOTIN"
+
+        
+    rno(0) = 3
+    Do While Sheets(1).Cells(rno(0), 1) <> ""
+        If Sheets(1).Cells(rno(0), 2).Value = "#N/A" Then
+            Sheets(1).Cells(rno(0), 2).Value = ""
+        End If
+        If Sheets(1).Cells(rno(0), 3).Value = "#N/A" Then
+            Sheets(1).Cells(rno(0), 3).Value = ""
+        End If
+        If Sheets(1).Cells(rno(0), 4).Value = "#N/A" Then
+            Sheets(1).Cells(rno(0), 4).Value = ""
+        End If
+        rno(0) = rno(0) + 1
+    Loop
+
+End Sub
+
+Sub main()
+    Call setting
+
+    If Sheets(1).Cells(2, 7).Value = "등록원정보에서" Then
+        sht = 2
+        If Sheets(1).Cells(2, 8).Value = "등록번호로" Then
+            Call Find_reg
+        ElseIf Sheets(1).Cells(2, 8).Value = "자격번호로" Then
+            Call Find_cert
+        ElseIf Sheets(1).Cells(2, 8).Value = "이메일로" Then
+            Call Find_Email
+        End If
+    ElseIf Sheets(1).Cells(2, 7).Value = "정회원정보에서" Then
+        sht = 3
+        If Sheets(1).Cells(2, 8).Value = "등록번호로" Then
+            MsgBox "정회원정보에서 등록번호로 검색은 불가능 합니다."
+        ElseIf Sheets(1).Cells(2, 8).Value = "자격번호로" Then
+            Call Find2_cert
+        ElseIf Sheets(1).Cells(2, 8).Value = "이메일로" Then
+            Call Find2_Email
+        End If
+    End If
+
+        
+End Sub
+
+Sub setting()
+
+    Dim pt_max(1) As Range
+    Dim rno(1) As Double
+    
+    'setting sheet2
+    If Sheets(4).Cells(5, 2) = "" Then
+        rno(0) = Sheets(2).Cells(Rows.Count, 1).End(xlUp).Row
+        Sheets(4).Cells(5, 2).Value = rno(0)
+        Set pt_max(0) = Range(Sheets(2).Cells(2, 1), Sheets(2).Cells(rno(0), 1))
+        Set pt_max(1) = Range(Sheets(2).Cells(2, 2), Sheets(2).Cells(rno(0), 2))
+        Sheets(4).Cells(5, 3).Value = Application.WorksheetFunction.Max(pt_max(0))
+        Sheets(4).Cells(5, 4).Value = Application.WorksheetFunction.Max(pt_max(1))
+    End If
+    'setting sheet3
+    If Sheets(4).Cells(11, 2) = "" Then
+        rno(1) = Sheets(3).Cells(Rows.Count, 1).End(xlUp).Row
+        Sheets(4).Cells(11, 2).Value = rno(1)
+        Set pt_max(0) = Range(Sheets(3).Cells(2, 1), Sheets(3).Cells(rno(1), 1))
+        Sheets(4).Cells(11, 4).Value = Application.WorksheetFunction.Max(pt_max(0))
+    End If
+    
+    
+End Sub
+
+
