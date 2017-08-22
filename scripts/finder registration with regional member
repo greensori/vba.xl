@@ -266,6 +266,10 @@ Sub Find2_Email()
 End Sub
 
 Sub main()
+    Dim stime As Single
+    stime = Timer
+    
+    
     Call setting
 
     If Sheets(1).Cells(2, 7).Value = "등록원정보에서" Then
@@ -287,6 +291,10 @@ Sub main()
             Call Find2_Email
         End If
     End If
+    
+    Sheets(1).Cells(7, 7).Value = "불일치 데이터의 수는 " & Application.WorksheetFunction.CountBlank(Range(Sheets(1).Cells(3, 2), Sheets(1).Cells(Sheets(1).Cells(Rows.Count, 2).End(xlUp).Row, 2))) & " 입니다"
+    Sheets(1).Cells(6, 7).Value = "총 데이터의 수 " & (Sheets(1).Cells(Rows.Count, 1).End(xlUp).Row - 2) & " 중에서"
+    Sheets(1).Cells(8, 7) = "검색에 " & Format(Timer - stime, "#0.00") & " 초가 걸림"
 
         
 End Sub
