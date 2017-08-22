@@ -27,3 +27,11 @@ Sheets(1).Cells(1, 3).Value = Sheets(1).Cells(Rows.Count, 1).End(xlUP).Row
 # show or hidden rows and columns
 Sheets(1).Rows("1:4").Hidden = True / False
 Sheets(1).Columns("A:D").Hidden = True / False
+
+#count blank
+Application.WorksheetFunction.CountBlank(Range(Sheets(1).Cells(3, 2), Sheets(1).Cells(Sheets(1).Cells(Rows.Count, 2).End(xlUp).Row, 2)))
+
+#used time
+Dim stime As Single
+stime = Timer
+Sheets(1).Cells(1, 1).Value = Format(Timer - stime, "#0.00")
