@@ -35,3 +35,16 @@ Application.WorksheetFunction.CountBlank(Range(Sheets(1).Cells(3, 2), Sheets(1).
 Dim stime As Single
 stime = Timer
 Sheets(1).Cells(1, 1).Value = Format(Timer - stime, "#0.00")
+
+#copy data
+    Dim pt(1) As Range
+    Dim sheetno(1) As Integer
+    Dim i(1) As Integer
+    
+    sheetno(0) = 1
+    sheetno(1) = 2
+    i(0) = 1
+    i(1) = 6000
+    Set pt(0) = Range(Sheets(sheetno(0)).Cells(i(0), 3), Sheets(sheetno(0)).Cells(i(1), 5))
+    Set pt(1) = Range(Sheets(sheetno(1)).Cells(i(0), 3), Sheets(sheetno(1)).Cells(i(1), 5))
+    pt(0).Copy pt(1)
