@@ -52,7 +52,7 @@ Sub test()
     
     Do While count < 7
         Set pt(0) = Range(Sheets(sheetno(0)).Cells(i(0), 3), Sheets(sheetno(0)).Cells(i(1), 5))
-        Set pt(1) = Range(Sheets(sheetno(1)).Cells(1, 3), Sheets(sheetno(1)).Cells(6000, 5))
+        Set pt(1) = Range(Sheets(sheetno(1)).Cells(1, 3), Sheets(sheetno(1)).Cells(1000, 5))
         pt(0).Copy pt(1)
         i(0) = i(0) + i(2)
         i(1) = i(1) + i(2)
