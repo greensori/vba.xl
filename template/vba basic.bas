@@ -60,3 +60,10 @@ Sub test()
         sheetno(1) = sheetno(1) + 1
     Loop
 End Sub
+
+preventdoubledata
+
+    Do While Sheets(1).Cells(row, 2) <> ""
+        Sheets(1).Cells(row, 14).Value = Application.WorksheetFunction.CountIf(pt(0), Sheets(1).Cells(row, 2))
+        row = row + 1
+    Loop
