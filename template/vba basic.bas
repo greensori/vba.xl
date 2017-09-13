@@ -61,9 +61,24 @@ Sub test()
     Loop
 End Sub
 
-preventdoubledata
-
+#preventdoubledata
     Do While Sheets(1).Cells(row, 2) <> ""
         Sheets(1).Cells(row, 14).Value = Application.WorksheetFunction.CountIf(pt(0), Sheets(1).Cells(row, 2))
+        row = row + 1
+    Loop
+
+
+# delete specific data
+
+    Dim pt As Range
+    Dim row As Long
+    Dim lstrow As Long
+    row = 1
+    
+    lstrow = Sheets(1).Cells(Rows.Count, 2).End(xlUp).row
+    Do While row <= lstrow
+        If Sheets(1).Cells(row, 2).Value = "" Then
+            Sheets(1).Cells(row, 2).EntireRow.Delete
+        End If
         row = row + 1
     Loop
