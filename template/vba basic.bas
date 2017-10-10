@@ -82,3 +82,9 @@ End Sub
         End If
         row = row + 1
     Loop
+
+
+# changing date format
+
+Dim Dvalue As String
+Dvalue = Format(Date, "yyyy. mm. dd")
