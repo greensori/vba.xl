@@ -1,0 +1,44 @@
+Sub abc()
+    Dim row As Integer
+    Dim pt(1) As Range
+    
+    Set pt(0) = Range(Sheets(2).Cells(2, 1), Sheets(2).Cells(1576, 1))
+    row = 2
+    
+    
+    
+    Do While Sheets(2).Cells(row, 1) <> ""
+        Sheets(2).Cells(row, 8).Value = Application.WorksheetFunction.CountIf(pt(0), Sheets(2).Cells(row, 1))
+        row = row + 1
+    Loop
+End Sub
+
+Sub edf()
+    Dim row As Integer
+    Dim row2 As Integer
+    Dim col As Integer
+    Dim tempname As String
+    
+    row = 3
+    row2 = 2
+    col = 22
+
+    Do While Sheets(1).Cells(row, 19) <> ""
+        If Sheets(1).Cells(row, 19) > 1 Then
+            tempname = Sheets(1).Cells(row, 8).Value
+            Do While Sheets(2).Cells(row2, 1) <> ""
+                If Sheets(2).Cells(row2, 1).Value = tempname Then
+                    Sheets(1).Cells(row, col).Value = Sheets(2).Cells(row2, 4).Value
+                    col = col + 1
+                    Sheets(1).Cells(row, col).Value = Sheets(2).Cells(row2, 5).Value
+                    col = col + 1
+                End If
+                row2 = row2 + 1
+            Loop
+            row2 = 2
+        End If
+        row = row + 1
+        col = 22
+    Loop
+End Sub
+
