@@ -89,4 +89,7 @@ End Sub
 Dim Dvalue As String
 Dvalue = Format(Date, "yyyy. mm. dd")
 
+# changing line 
+## chr(10) = enter key
+Sheets(1).Cells(1, 1).Value = "abc" & Chr(10) & "efd"
 
