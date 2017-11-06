@@ -1,0 +1,46 @@
+Sub abc()
+    Dim i As Integer
+    Dim row As Integer
+    Dim Dvalue As String
+    
+    row = 3
+    Do While Sheets(1).Cells(row, 1) <> ""
+        Dvalue = Sheets(1).Cells(row, 1)
+        Dvalue = Format(Dvalue, "yyyymmdd")
+        Sheets(1).Cells(row, 2) = Dvalue
+        row = (row + 1)
+    Loop
+    
+End Sub
+
+
+Sub abc2()
+    Dim i As Integer
+    Dim row As Integer
+    Dim Dvalue As String
+    
+    row = 3
+    Do While Sheets(1).Cells(row, 1) <> ""
+        Dvalue = Sheets(1).Cells(row, 1)
+        Dvalue = Format(Dvalue, "yyyy-mm-dd")
+        Sheets(1).Cells(row, 2) = Dvalue
+        row = (row + 1)
+    Loop
+    
+End Sub
+
+Sub abc3()
+    Dim i As Integer
+    Dim row As Integer
+    Dim Dvalue As String
+    
+    row = 3
+    Do While Sheets(1).Cells(row, 1) <> ""
+        Dvalue = Sheets(1).Cells(row, 1)
+        Dvalue = Format(Dvalue, "yyyy.mm.dd")
+        Sheets(1).Cells(row, 2) = Dvalue
+        row = (row + 1)
+    Loop
+    
+End Sub
+
