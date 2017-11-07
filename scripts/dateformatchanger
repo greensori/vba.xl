@@ -2,6 +2,7 @@ Sub abc()
     Dim i As Integer
     Dim row As Integer
     Dim Dvalue As String
+    Dim pt As Range
     
     row = 3
     Do While Sheets(1).Cells(row, 1) <> ""
@@ -10,6 +11,10 @@ Sub abc()
         Sheets(1).Cells(row, 2) = Dvalue
         row = (row + 1)
     Loop
+
+    Set pt = Range(Sheets(1).Cells(3, 2), Sheets(1).Cells(Rows.Count, 2))
+    pt.NumberFormatLocal = "@"
+
     
 End Sub
 
