@@ -1,0 +1,53 @@
+Sub finder()
+    Dim i As Integer
+    Dim temp As Integer
+    Dim pt(3) As Range
+    Dim eCol As Integer
+    Dim totalstr As String
+    Dim maxcount As Integer
+    
+    i = 3
+    eCol = eColproc()
+    Sheets(1).Cells(2, 3).Value = eCol
+    
+    Do While Sheets(1).Cells(i, 2).Value <> ""
+        Set pt(0) = Range(Sheets(1).Cells(i, 2), Sheets(1).Cells(i, eCol))
+        Set pt(1) = Range(Sheets(2).Cells(i, 4), Sheets(2).Cells(i, (eCol + 2)))
+        pt(0).Copy pt(1)
+        totalstr = sumstr(i, eCol)
+        Sheets(2).Cells(i, 2).Value = sumstr(i, eCol)
+        i = i + 1
+    Loop
+    
+    
+    i = 3
+    maxcount = Sheets(1).Cells(Rows.Count, 2).End(xlUp).Row
+    Set pt(2) = Range(Sheets(2).Cells(i, 2), Sheets(2).Cells(maxcount, 2))
+    For i = 3 To maxcount
+        Sheets(2).Cells(i, 1).Value = (i - 2) 'set obs
+        '''If Sheets(2).Cells(i, 2).Value <> "" Then
+            Sheets(2).Cells(i, 3).Value = Application.WorksheetFunction.CountIf(pt(2), Sheets(2).Cells(i, 2))
+            If Sheets(2).Cells(i, 3).Value <> 1 Then
+                Sheets(2).Cells(i, 3).EntireRow.Delete
+            End If
+        '''End If
+    Next
+    
+
+End Sub
+
+
+Function eColproc() As Integer
+    eColproc = Sheets(1).Cells(3, Columns.Count).End(xlToLeft).Column
+End Function
+
+Function sumstr(rowno As Integer, max As Integer) As String
+    Dim icol As Integer
+        
+    icol = 2
+    
+    Do While icol <= max
+        sumstr = sumstr & Sheets(1).Cells(rowno, icol).Value
+        icol = icol + 1
+    Loop
+End Function
