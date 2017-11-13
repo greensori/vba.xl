@@ -6,6 +6,9 @@ Sub finder()
     Dim totalstr As String
     Dim maxcount As Integer
     
+    Dim row As Integer
+    Dim tempdata As String
+    
     i = 3
     eCol = eColproc()
     Sheets(1).Cells(2, 3).Value = eCol
@@ -16,23 +19,25 @@ Sub finder()
         pt(0).Copy pt(1)
         totalstr = sumstr(i, eCol)
         Sheets(2).Cells(i, 2).Value = sumstr(i, eCol)
+        Sheets(2).Cells(i, 1).Value = (i - 2)
         i = i + 1
     Loop
     
     
     i = 3
-    maxcount = Sheets(1).Cells(Rows.Count, 2).End(xlUp).Row
-    Set pt(2) = Range(Sheets(2).Cells(i, 2), Sheets(2).Cells(maxcount, 2))
-    For i = 3 To maxcount
-        Sheets(2).Cells(i, 1).Value = (i - 2) 'set obs
-        '''If Sheets(2).Cells(i, 2).Value <> "" Then
-            Sheets(2).Cells(i, 3).Value = Application.WorksheetFunction.CountIf(pt(2), Sheets(2).Cells(i, 2))
-            If Sheets(2).Cells(i, 3).Value <> 1 Then
-                Sheets(2).Cells(i, 3).EntireRow.Delete
+    Do While Sheets(2).Cells(i, 2).Value <> ""
+        tempdata = Sheets(2).Cells(i, 2).Value
+        row = i + 1
+        Do While Sheets(2).Cells(row, 2).Value <> ""
+            If Sheets(2).Cells(row, 2).Value = tempdata Then
+                Sheets(2).Cells(row, 2).EntireRow.Delete
+                row = row - 1
             End If
-        '''End If
-    Next
-    
+            row = row + 1
+        Loop
+        i = i + 1
+    Loop
+
 
 End Sub
 
@@ -51,3 +56,4 @@ Function sumstr(rowno As Integer, max As Integer) As String
         icol = icol + 1
     Loop
 End Function
+
