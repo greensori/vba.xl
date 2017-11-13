@@ -5,18 +5,25 @@ Sub finder()
     Dim eCol As Integer
     Dim totalstr As String
     Dim maxcount As Integer
+    Dim count As Integer
+    Dim stime As Single
     
     Dim row As Integer
     Dim tempdata As String
     
+    stime = Timer
+    
+    count = 0
     i = 3
     eCol = eColproc()
     Sheets(1).Cells(2, 3).Value = eCol
     
+    Set pt(0) = Range(Sheets(1).Cells(i, 2), Sheets(1).Cells(Sheets(1).Cells(Rows.count, 1).End(xlUp).row, eCol))
+    Set pt(1) = Range(Sheets(2).Cells(i, 4), Sheets(2).Cells(Sheets(1).Cells(Rows.count, 1).End(xlUp).row, (eCol + 2)))
+    pt(0).Copy pt(1)
+    
     Do While Sheets(1).Cells(i, 2).Value <> ""
-        Set pt(0) = Range(Sheets(1).Cells(i, 2), Sheets(1).Cells(i, eCol))
-        Set pt(1) = Range(Sheets(2).Cells(i, 4), Sheets(2).Cells(i, (eCol + 2)))
-        pt(0).Copy pt(1)
+        Sheets(1).Cells(i, 1).Value = (i - 2)
         totalstr = sumstr(i, eCol)
         Sheets(2).Cells(i, 2).Value = sumstr(i, eCol)
         Sheets(2).Cells(i, 1).Value = (i - 2)
@@ -31,19 +38,21 @@ Sub finder()
         Do While Sheets(2).Cells(row, 2).Value <> ""
             If Sheets(2).Cells(row, 2).Value = tempdata Then
                 Sheets(2).Cells(row, 2).EntireRow.Delete
+                count = count + 1
                 row = row - 1
             End If
             row = row + 1
         Loop
         i = i + 1
     Loop
-
-
+    
+    MsgBox ("총 " & count & " 개의 중복 데이터 제거에 " & (Timer - stime) & "초가 걸림")
+    
 End Sub
 
 
 Function eColproc() As Integer
-    eColproc = Sheets(1).Cells(3, Columns.Count).End(xlToLeft).Column
+    eColproc = Sheets(1).Cells(3, Columns.count).End(xlToLeft).Column
 End Function
 
 Function sumstr(rowno As Integer, max As Integer) As String
