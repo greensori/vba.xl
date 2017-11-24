@@ -265,10 +265,52 @@ Sub Find2_Email()
 
 End Sub
 
+Sub edu_finder()
+    Dim pt(3) As Range
+    Dim rno(2) As Double
+    Dim temp As Range
+    Dim i As Double
+    
+    rno(0) = Sheets(1).Cells(Rows.Count, 1).End(xlUp).Row
+    rno(1) = Sheets(4).Cells(17, 2).Value
+    rno(2) = Sheets(4).Cells(17, 3).Value
+    
+    Set pt(0) = Range(Sheets(1).Cells(3, 2), Sheets(1).Cells(rno(0), 2))
+    
+    Set pt(1) = Range(Sheets(1).Cells(3, 1), Sheets(1).Cells(rno(0), 1))
+    'len7 data
+    Set pt(2) = Range(Sheets(5).Cells(2, 1), Sheets(5).Cells(rno(1), 5))
+    'len5 data
+    Set pt(3) = Range(Sheets(6).Cells(2, 1), Sheets(6).Cells(rno(2), 5))
+    
+    Sheets(1).Cells(2, 2).Value = "등록번호"
+    Sheets(1).Cells(2, 3).Value = "이름"
+    
+    
+    
+    i = 3
+    For Each temp In pt(1)
+        If Len(temp) = 7 Then
+            On Error Resume Next
+                Sheets(1).Cells(i, 2).Value = Application.WorksheetFunction.VLookup(temp, pt(2), 2, 0)
+            On Error Resume Next
+                Sheets(1).Cells(i, 3).Value = Application.WorksheetFunction.VLookup(temp, pt(2), 4, 0)
+        ElseIf Len(temp) = 5 Then
+            On Error Resume Next
+                Sheets(1).Cells(i, 2).Value = Application.WorksheetFunction.VLookup(temp, pt(3), 2, 0)
+            On Error Resume Next
+                Sheets(1).Cells(i, 3).Value = Application.WorksheetFunction.VLookup(temp, pt(3), 4, 0)
+        End If
+        i = i + 1
+    Next
+    
+    
+
+End Sub
+
 Sub main()
     Dim stime As Single
     stime = Timer
-    
     
     Call setting
 
@@ -289,6 +331,14 @@ Sub main()
             Call Find2_cert
         ElseIf Sheets(1).Cells(2, 8).Value = "이메일로" Then
             Call Find2_Email
+        End If
+    ElseIf Sheets(1).Cells(2, 7).Value = "교육원정보에서" Then
+        If Sheets(1).Cells(2, 8).Value = "등록번호로" Then
+            Call edu_finder
+        ElseIf Sheets(1).Cells(2, 8).Value = "자격번호로" Then
+            MsgBox "교육원정보에서 자격번호로 검색은 불가능 합니다."
+        ElseIf Sheets(1).Cells(2, 8).Value = "이메일로" Then
+            MsgBox "교육원정보에서 이메일로 검색은 불가능 합니다."
         End If
     End If
     
