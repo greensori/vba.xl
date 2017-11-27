@@ -1,24 +1,40 @@
-Sub abc()
-    Dim row As Integer
-    Dim pt(1) As Range
-    Dim lastrow As Integer
-    
-    
-    lastrow = Sheets(1).Cells(Rows.Count, 3).End(xlUp).row
+Public count As Integer
+Public sht As Worksheet
 
-    row = 2
-    Do While Sheets(1).Cells(row, 3) <> ""
-        Sheets(1).Cells(row, 11).Value = Sheets(1).Cells(row, 3).Value & Sheets(1).Cells(row, 4).Value
-        row = row + 1
-    Loop
+Sub name()
+    Set sht = Sheets(1)
+    count = 1
     
-    Set pt(0) = Range(Sheets(1).Cells(2, 11), Sheets(1).Cells(lastrow, 11))
-    row = 2
-    Do While Sheets(1).Cells(row, 11) <> ""
-        Sheets(1).Cells(row, 10).Value = Application.WorksheetFunction.CountIf(pt(0), Sheets(1).Cells(row, 11))
-        row = row + 1
-    Loop
-
-    Set pt(1) = Range(Sheets(1).Cells(2, 11), Sheets(1).Cells(Rows.Count, 11))
-    pt(1).ClearContents
+    Call countif(1, 2)
 End Sub
+
+
+Function countif(ParamArray col() As Variant)
+    Dim obs As Integer
+    Dim pts(1) As Range
+    Dim pt As Range
+    
+    Dim param As Variant
+    
+    'setting start rows number
+    obs = count
+    
+    'setting col values col(0) is target range and col(1) is result range
+    With sht
+        Set pts(0) = Range(Cells(obs, col(0)), Cells(erow(), col(0)))
+        For Each pt In pts(0)
+            Cells(obs, col(1)).Value = Application.WorksheetFunction.countif(pts(0), pt)
+            obs = obs + 1
+        Next
+    End With
+End Function
+    
+
+Function ecol(Optional n = 1, Optional m = 1) As Double
+    ecol = Sheets(n).Cells(m, Columns.count).End(xlToLeft).Column
+    
+End Function
+
+Function erow(Optional n = 1, Optional m = 1) As Double
+    erow = Sheets(n).Cells(Rows.count, m).End(xlUp).row
+End Function
