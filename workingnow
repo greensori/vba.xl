@@ -1,0 +1,73 @@
+Public count As Integer
+Public sht As Worksheet
+
+Sub name()
+    Set sht = Sheets(2)
+    count = 3
+    Call countif(1, 7)
+End Sub
+
+
+Function countif(ParamArray col() As Variant)
+    Dim obs As Integer
+    Dim pts(1) As Range
+    Dim pt As Range
+    
+    Dim param As Variant
+    
+    'setting start rows number
+    obs = count
+    
+    'setting col values col(0) is target range and col(1) is result range
+    With sht
+        Set pts(0) = Range(Cells(obs, col(0)), Cells(erow(2, 1), col(0)))
+        For Each pt In pts(0)
+            Cells(obs, col(1)).Value = Application.WorksheetFunction.countif(pts(0), pt)
+            obs = obs + 1
+        Next
+    End With
+End Function
+    
+
+Function ecol(Optional n = 1, Optional m = 1) As Double
+    ecol = Sheets(n).Cells(m, Columns.count).End(xlToLeft).Column
+End Function
+
+Function erow(Optional n = 1, Optional m = 1) As Double
+    erow = Sheets(n).Cells(Rows.count, m).End(xlUp).row
+End Function
+
+
+Function rt(a As Integer) As Integer
+    rt = (a * 2)
+End Function
+
+
+Sub abc()
+    With Sheets(2)
+        Cells(4, 2).NumberFormat = "0000"
+        tempdata = Cells(3, 4).Value
+        If IsNumeric(tempdata) Then
+            'Cells(3, 4).NumberFormat = "0000000"
+            MsgBox "number"
+        End If
+    End With
+End Sub
+
+Sub aa()
+    Dim tempdata As Long
+    Dim c As Range
+    
+    
+    With Sheets(2)
+        tempdata = Cells(2, 4).Interior.Color
+        If IsNumeric(Cells(4, 2).Value) Then
+            MsgBox "number"
+        End If
+        MsgBox tempdata
+        Set c = Range(Cells(3, 1), Cells(15, 1)).Find("박동수")
+        c.Interior.Color = RGB(0, 150, 0)
+    End With
+End Sub
+
+
