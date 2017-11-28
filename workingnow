@@ -56,7 +56,9 @@ End Sub
 
 Sub aa()
     Dim tempdata As Long
+    Dim mycol As New Collection
     Dim c As Range
+    Dim pt As Range
     
     
     With Sheets(2)
@@ -65,9 +67,161 @@ Sub aa()
             MsgBox "number"
         End If
         MsgBox tempdata
-        Set c = Range(Cells(3, 1), Cells(15, 1)).Find("박동수")
-        c.Interior.Color = RGB(0, 150, 0)
+        'Set c = Range(Cells(3, 1), Cells(15, 1)).Find("박동수")
+        'c.Interior.Color = RGB(0, 150, 0)
+        mycol.Add Range(Cells(3, 1), Cells(15, 1)).Find("박동수")
+        mycol.Add Range(Cells(3, 1), Cells(15, 1)).Find("강신욱")
+        For Each pt In mycol
+            With pt
+                .Interior.Color = RGB(120, 0, 0)
+                .Offset(0, 1).Interior.Color = RGB(0, 120, 120)
+            End With
+        Next
+        
     End With
 End Sub
+
+
+Sub datemd()
+    Dim pts As Range
+    Dim pt As Range
+    Dim row As Double
+    Dim row2 As Integer
+    
+    
+    Dim sday As Date
+    Dim eday As Date
+    Dim col As Double
+    
+    Dim sdaycol As New Collection
+    Dim edatcol As New Collection
+    
+    
+    
+    With Sheets(1)
+        Set pts = Range(Cells(2, 2), Cells(erow(1, 2), 2))
+        Cells(2, 7).Value = Application.WorksheetFunction.Max(pts)
+        Cells(3, 7).Value = Application.WorksheetFunction.Min(pts)
+        Cells(4, 7).Value = (Cells(2, 7).Value - Cells(3, 7).Value)
+    End With
+    
+    
+    
+    row = 2
+    With Sheets(1)
+        Do While Cells(row, 2).Value <> ""
+            eday = Cells(row, 3)
+            sday = Cells(row, 2)
+            Cells(row, 4).Value = (eday - sday)
+            row2 = 2
+            col = 9
+            Do While Cells(row2, 2).Value <> ""
+                If Cells(row2, 2).Value >= sday And Cells(row2, 2).Value <= eday Then
+                    If Cells(row2, 3).Value >= sday And Cells(row2, 3).Value <= eday Then
+                        Cells(row, col).Value = Cells(row2, 2)
+                        col = col + 1
+                        Cells(row, col).Value = Cells(row2, 3)
+                        col = col + 1
+                    ElseIf Cells(row2, 3).Value > eday Then
+                        Cells(row, col).Value = Cells(row2, 2)
+                        col = col + 1
+                        Cells(row, col).Value = eday
+                        col = col + 1
+                    End If
+                ElseIf Cells(row2, 2).Value < sday Then
+                    If Cells(row2, 3).Value >= sday And Cells(row2, 3).Value <= eday Then
+                        Cells(row, col).Value = sday
+                        col = col + 1
+                        Cells(row, col).Value = Cells(row2, 3)
+                        col = col + 1
+                    ElseIf Cells(row2, 3).Value > eday Then
+                        Cells(row, col).Value = sday
+                        col = col + 1
+                        Cells(row, col).Value = eday
+                        col = col + 1
+                    End If
+                End If
+                row2 = row2 + 1
+            Loop
+            row = row + 1
+        Loop
+    End With
+    
+    row = 2
+    Do While Sheets(1).Cells(row, 2).Value <> ""
+        Call datefin(row)
+        row = row + 1
+    Loop
+End Sub
+
+
+Function datefin(row As Double)
+
+    Dim standard As Double
+    Dim standardmax As Double
+    Dim pts As Range
+    Dim pt As Range
+    Dim temp As Range
+    Dim result As Date
+    Dim pv As Double
+    Dim i As Double
+    Dim starter As Integer
+    Dim gap As Integer
+    
+    Dim resultmax As Double
+    Dim row2 As Integer
+    Set pts = Range(Sheets(1).Cells(row, 9), Sheets(1).Cells(row, ecol(1, row)))
+    
+    standard = (Application.WorksheetFunction.Min(pts) - 1)
+    standardmax = (Application.WorksheetFunction.Max(pts) + 1)
+    
+    row2 = 1
+    col = 9
+    Do While Sheets(1).Cells(row, col) <> ""
+        gap = (Sheets(1).Cells(row, (col + 1)) - Sheets(1).Cells(row, col))
+        starter = Sheets(1).Cells(row, col).Value - standard
+        On Error Resume Next
+            Set temp = Range(Sheets(2).Cells(row2, starter), Sheets(2).Cells(row2, (starter + gap)))
+        temp.Value = 1
+        row2 = row2 + 1
+        col = col + 2
+    Loop
+    
+    resultmax = 0
+    
+    For i = 1 To standardmax
+        Sheets(2).Cells(500, i).Value = 1 / Application.WorksheetFunction.Sum(Range(Sheets(2).Cells(1, i), Sheets(2).Cells(499, i)))
+        resultmax = resultmax + Sheets(2).Cells(500, i).Value
+    Next
+    
+    Sheets(1).Cells(row, 5).Value = resultmax
+    Range(Sheets(2).Cells(1, 1), Sheets(2).Cells(Rows.count, Columns.count)).ClearContents
+'
+ '   pv = 1
+  '  row2 = 1
+   ' For Each pt In pts
+    '    If pv = 1 Then
+     '       result = pt - standard
+'            If result >= 1 Then
+  '              On Error Resume Next
+ '                   Set temp = Range(Sheets(2).Cells(row2, 1), Sheets(2).Cells(row2, result)).Value
+            '        temp.Value = 0
+   '         End If
+    '        pv = 2
+     '   ElseIf pv = 2 Then
+      '      result = pt - standard
+       '     If result >= 1 Then
+        '        On Error Resume Next
+         '           temp = Range(Cells(row2, (ecol(2, row2) + 1)), Cells(row2, result)).Value
+          '          temp.Value = 1
+           ' End If
+'            pv = 1
+ '       End If
+  '      row2 = row2 + 1
+   ' Next
+    
+    
+    
+End Function
 
 
