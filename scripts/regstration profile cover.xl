@@ -1,4 +1,3 @@
-
 Sub change()
     Dim pt(5) As Range
     Dim str(3) As Integer
@@ -8,14 +7,19 @@ Sub change()
     Dim Col As Integer
     Dim start_i As Integer
     
-    
-    Set pt(1) = Sheets(2).Range(Sheets(2).Cells(4, 1), Sheets(2).Cells(23, 1))
+
+    Set pt(1) = Range(Sheets(2).Cells(4, 1), Sheets(2).Cells(23, 1))
     For Col = 2 To 5
-        Set pt(Col) = Sheets(2).Range(Sheets(2).Cells(4, Col), Sheets(2).Cells(23, Col))
+        Set pt(Col) = Range(Sheets(2).Cells(4, Col), Sheets(2).Cells(23, Col))
+        Range(Sheets(2).Cells(4, 2), Sheets(2).Cells(23, 5)).Font.Strikethrough = False
     Next
+    
     'get datas from Sheets1
-    tempdata = Sheets(1).Cells(1, 6).Value
-    tempyear = Sheets(1).Cells(1, 3).Value
+    With Sheets(1)
+        tempdata = Cells(1, 6).Value
+        tempyear = Cells(1, 3).Value
+    End With
+    
     Sheets(2).Cells(1, 1).Value = "실무수련 접수 대장 (" & tempdata & "~" & tempdata + 19 & ")"
     
     'imput data on sheets2
@@ -34,6 +38,8 @@ Sub change()
             np(0) = Sheets(1).Cells(i, 1).Value
             np(0) = Left(np(0), 4) & "-" & Right(np(0), 4)
             Sheets(1).Cells(i, 1).Value = np(0)
+            Sheets(1).Cells(i, 1) = Replace(Sheets(1).Cells(i, 1), "-0", "-")
+            Sheets(1).Cells(i, 1) = Replace(Sheets(1).Cells(i, 1), "-0", "-")
             Sheets(1).Cells(i, 1) = Replace(Sheets(1).Cells(i, 1), "-0", "-")
             np(1) = Sheets(1).Cells(i, 4).Value
             np(1) = "19" & Left(np(1), 2) & "." & Mid(np(1), 3, 2) & "." & Mid(np(1), 5, 2)
@@ -57,12 +63,28 @@ Sub change()
     
     For i = 4 To 24
         If Sheets(2).Cells(i, 2).Text = "#N/A" Then
-            Sheets(2).Range(Sheets(2).Cells(i, 2), Sheets(2).Cells(i, 5)).ClearContents
+            Range(Sheets(2).Cells(i, 2), Sheets(2).Cells(i, 5)).ClearContents
         ElseIf Sheets(2).Cells(i, 5).Text = "완료" Then
-            Sheets(2).Range(Sheets(2).Cells(i, 2), Sheets(2).Cells(i, 5)).Font.Strikethrough = True
+            Range(Sheets(2).Cells(i, 2), Sheets(2).Cells(i, 5)).Font.Strikethrough = True
         End If
-
     Next
-    
-    
 End Sub
+
+Sub printerwork()
+
+    Dim pt As Range
+    Set pt = Range(Sheets(2).Cells(1, 1), Sheets(2).Cells(24, 5))
+    
+    pt.PrintOut
+
+End Sub
+
+Function changer(ParamArray param() As Variant) As String
+    Dim clt As Collection
+    Dim result As String
+    
+    
+    
+End Function
+
+
