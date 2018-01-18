@@ -48,10 +48,9 @@ Sub change()
                 Sheets(1).Cells(i, 20) = "완료"
             End If
             i = i + 1
-            Sheets(1).Cells(1, 1).Value = i - 1
         Loop
     End If
-    
+    Sheets(1).Cells(1, 1).Value = i - 1
     
     i = Sheets(1).Cells(1, 1).Value
     Set pt(0) = Sheets(1).Range(Sheets(1).Cells(start_i, 1), Sheets(1).Cells(i, 20))
