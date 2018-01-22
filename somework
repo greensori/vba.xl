@@ -1,0 +1,96 @@
+Sub abc()
+
+    Dim pts(1) As Range
+    Dim pt As Range
+    
+    Dim rowno As Integer
+    
+    rowno = 2
+    temp = 15053
+    Set pts(0) = Range(Sheets(2).Cells(2, 10), Sheets(2).Cells(temp, 10))
+    For Each pt In pts(0)
+        Cells(rowno, 14).Value = Application.WorksheetFunction.CountIf(pts(0), pt)
+        rowno = rowno + 1
+    Next
+End Sub
+
+'13~15
+
+Sub edf()
+
+    Dim pts(5) As Range
+    Dim pt As Variant
+    
+    Dim cellno As Double
+    Dim colno As Integer
+    
+    Dim resultsht As Integer
+    Dim inputcolno As Integer
+    
+    inputcolno = 11
+    resultsht = ecol(3, 1)
+    Set pts(0) = Range(Sheets(3).Cells(2, 11), Sheets(3).Cells(ecol(3, 1), 11))
+    
+    
+    
+    Set pts(1) = Range(Sheets(2).Cells(2, 13), Sheets(2).Cells(ecol(), 15))
+    
+    
+    
+    
+    
+End Sub
+
+
+Function ecol(Optional n = 2, Optional m = 13) As Double
+    ecol = Sheets(n).Cells(Rows.Count, m).End(xlUp).row
+End Function
+
+
+Function findduplicator(ParamArray mypar() As Variant) As String
+
+End Function
+
+Sub idpredict()
+    Dim row As Double
+    Dim stackedregno As String
+    Dim tempdata As String
+    Dim pts(1) As Range
+    Dim pt As Variant
+    Dim row2 As Double
+    
+    Dim myint As Variant
+    
+    Set pts(0) = Range(Sheets(2).Cells(13, 2), Sheets(2).Cells(ecol(2, 13), 13))
+    row = 2
+    row2 = 1
+    
+    Do While Sheets(3).Cells(row, 2).Value <> ""
+        stackedregno = ""
+        tempdata = Sheets(3).Cells(row, 2).Value
+        For Each pt In pts(0)
+            row2 = row2 + 1
+            If pt = tempdata Then
+                myint = Sheets(2).Cells(row2, 19).Value
+                stackedregno = resultstacked(stackedregno, myint)
+            End If
+        Next
+        If Sheets(2).Cells(row, 11).Value = "" Then
+            Sheets(3).Cells(row, 11).Value = stackedregno
+        End If
+        row = row + 1
+    Loop
+
+End Sub
+
+
+Function resultstacked(ParamArray myparam() As Variant) As String
+    resultstacked = (myparam(0) & "," & myparam(1))
+
+End Function
+
+
+Function stackedregno() As String
+    
+
+End Function
