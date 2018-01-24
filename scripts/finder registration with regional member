@@ -266,42 +266,30 @@ Sub Find2_Email()
 End Sub
 
 Sub edu_finder()
-    Dim pt(3) As Range
-    Dim rno(2) As Double
-    Dim temp As Range
-    Dim i As Double
+    Dim pts(3) As Range
+    Dim pt As Range
     
-    rno(0) = Sheets(1).Cells(Rows.Count, 1).End(xlUp).Row
-    rno(1) = Sheets(4).Cells(17, 2).Value
-    rno(2) = Sheets(4).Cells(17, 3).Value
-    
-    Set pt(0) = Range(Sheets(1).Cells(3, 2), Sheets(1).Cells(rno(0), 2))
-    
-    Set pt(1) = Range(Sheets(1).Cells(3, 1), Sheets(1).Cells(rno(0), 1))
+    'target data
+    Set pts(0) = Range(Sheets(1).Cells(1, 1), Sheets(1).Cells(erow(1, 1), 1))
+ 
     'len7 data
-    Set pt(2) = Range(Sheets(5).Cells(2, 1), Sheets(5).Cells(rno(1), 5))
+    Set pts(1) = Range(Sheets(5).Cells(2, 1), Sheets(5).Cells(erow(5, 5), 5))
     'len5 data
-    Set pt(3) = Range(Sheets(6).Cells(2, 1), Sheets(6).Cells(rno(2), 5))
+    Set pts(2) = Range(Sheets(6).Cells(2, 1), Sheets(6).Cells(erow(6, 5), 5))
     
     Sheets(1).Cells(2, 2).Value = "등록번호"
     Sheets(1).Cells(2, 3).Value = "이름"
-    
-    
-    
-    i = 3
-    For Each temp In pt(1)
-        If Len(temp) = 7 Then
+
+    For Each pt In pts(0)
+        If Len(pt) = 7 Then
             On Error Resume Next
-                Sheets(1).Cells(i, 2).Value = Application.WorksheetFunction.VLookup(temp, pt(2), 2, 0)
+                pt.Offset(, 1) = Application.WorksheetFunction.VLookup(pt, pts(1), 2, 0)
+                pt.Offset(, 2) = Application.WorksheetFunction.VLookup(pt, pts(1), 4, 0)
+        ElseIf Len(pt) = 5 Then
             On Error Resume Next
-                Sheets(1).Cells(i, 3).Value = Application.WorksheetFunction.VLookup(temp, pt(2), 4, 0)
-        ElseIf Len(temp) = 5 Then
-            On Error Resume Next
-                Sheets(1).Cells(i, 2).Value = Application.WorksheetFunction.VLookup(temp, pt(3), 2, 0)
-            On Error Resume Next
-                Sheets(1).Cells(i, 3).Value = Application.WorksheetFunction.VLookup(temp, pt(3), 4, 0)
+                pt.Offset(, 1) = Application.WorksheetFunction.VLookup(pt, pts(2), 2, 0)
+                pt.Offset(, 2) = Application.WorksheetFunction.VLookup(pt, pts(2), 4, 0)
         End If
-        i = i + 1
     Next
     
     
@@ -375,3 +363,12 @@ Sub setting()
 End Sub
 
 
+
+Function ecol(Optional n = 1, Optional m = 1) As Double
+    ecol = Sheets(n).Cells(m, Columns.Count).End(xlToLeft).Column
+End Function
+
+
+Function erow(Optional n = 1, Optional m = 1) As Double
+    erow = Sheets(n).Cells(Rows.Count, m).End(xlUp).Row
+End Function
