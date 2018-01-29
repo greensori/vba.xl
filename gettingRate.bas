@@ -22,7 +22,8 @@ Sub abc()
     clReceive = getrate(4, inputStringData(1, 4, 9))
     
     resultY = finalRate(NumReceive, rwReceive, clReceive)
-    MsgBox resultY
+    Sheets(1).Cells(5, 9).Value = NumReceive * (resultY * 0.01)
+    'MsgBox resultY
     'complete getting rw, cl
     
 End Sub
@@ -198,11 +199,11 @@ Function finalRateEFG(ParamArray par() As Variant) As Double
     str = Mid(par(2), 2, 2)
     
     If str = "3종" Then
-        offsetno = 4
+        offsetno = 1
     ElseIf str = "2종" Then
-        offsetno = 7
+        offsetno = 4
     ElseIf str = "1종" Then
-        offsetno = 10
+        offsetno = 7
     End If
     'Debug.Print "offsetno:" & offsetno
 
@@ -212,9 +213,10 @@ Function finalRateEFG(ParamArray par() As Variant) As Double
     temp(1) = ((pt.Offset(0, offsetno) - pt.Offset(1, offsetno)) / 100)
     temp(2) = pt.Offset(1, 0) - pt
     temp(3) = ((temp(0) * temp(1)) / temp(2))
-    finalRateEFG = pt.Offset(, offsetno) - temp(3)
+    finalRateEFG = pt.Offset(0, offsetno) - temp(3)
     
-    Debug.Print "offset result" & (pt.Offset(0, offsetno) - pt.Offset(1, offsetno))
+    Debug.Print "standard:" & pt
+    Debug.Print "offset result2:" & (pt.Offset(0, offsetno) - pt.Offset(1, offsetno))
 
 End Function
 
