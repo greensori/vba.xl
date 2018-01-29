@@ -1,3 +1,16 @@
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+    Dim pts(1) As Range
+    
+    Set pts(0) = Range(Sheets(1).Cells(1, 1), Sheets(1).Cells(3, 1))
+    
+
+    If Not Intersect(pts(0), Range(Target.Address)) Is Nothing Then
+        Call myauto2
+    End If
+
+End Sub
+
 Sub Auto_Open()
     Application.OnKey "~", "myauto"
 End Sub
@@ -29,6 +42,8 @@ Sub mainnnameSht2()
     
 
 End Sub
+
+
 
 'rate per buildig price(sheets(1))
 Sub abc()
