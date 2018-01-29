@@ -302,3 +302,15 @@ Sub dateFormatChanger()
     Sheets(2).Cells(18, 29).Value = Left(temp, 4) & "년 " & Mid(temp, 5, 2) & "월 " & Right(temp, 2) & "일"
 
 End Sub
+
+Sub returnActiveCell()
+
+    Dim x, y As Integer
+    
+    x = ActiveCell.row
+    y = ActiveCell.Column
+    
+    MsgBox "x_" & x & "y_" & y
+    
+
+End Sub
