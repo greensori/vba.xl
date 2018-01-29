@@ -273,3 +273,12 @@ Sub rwHeight()
     Set pts(0) = Range(Sheets(1).Cells(3, 32), Sheets(1).Cells(25, 42))
     pts(0).RowHeight = 20
 End Sub
+
+Sub dateFormatChanger()
+    Dim temp As String
+    
+    temp = Sheets(2).Cells(18, 29).Value
+    
+    Sheets(2).Cells(18, 29).Value = Left(temp, 4) & "년 " & Mid(temp, 5, 2) & "월 " & Right(temp, 2) & "일"
+
+End Sub
