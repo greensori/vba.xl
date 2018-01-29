@@ -155,10 +155,10 @@ Sub EFG()
     NumReceive = inputnumber(2, 4, 7)
         
     rwReceive = getrwEFG(2, 16, NumReceive)
-    MsgBox rwReceive
     resultY = finalRateEFG(NumReceive, rwReceive, inputStringData(2, 4, 11))
-    MsgBox resultY
     
+    Debug.Print "resultY value:" & resultY
+    Sheets(2).Cells(5, 11).Value = (NumReceive * (resultY / 100))
 End Sub
 
 Function getrwEFG(ParamArray par() As Variant) As Integer
@@ -198,22 +198,23 @@ Function finalRateEFG(ParamArray par() As Variant) As Double
     str = Mid(par(2), 2, 2)
     
     If str = "3종" Then
-        offsetno = 2
-    ElseIf str = "2종" Then
-        offsetno = 3
-    ElseIf str = "1종" Then
         offsetno = 4
+    ElseIf str = "2종" Then
+        offsetno = 7
+    ElseIf str = "1종" Then
+        offsetno = 10
     End If
+    'Debug.Print "offsetno:" & offsetno
 
     Set pt = Sheets(2).Cells(par(1), 3)
     
     temp(0) = par(0) - pt
-    temp(1) = pt.Offset(, offsetno) - pt.Offset(1, offsetno)
+    temp(1) = ((pt.Offset(0, offsetno) - pt.Offset(1, offsetno)) / 100)
     temp(2) = pt.Offset(1, 0) - pt
     temp(3) = ((temp(0) * temp(1)) / temp(2))
     finalRateEFG = pt.Offset(, offsetno) - temp(3)
     
-
+    Debug.Print "offset result" & (pt.Offset(0, offsetno) - pt.Offset(1, offsetno))
 
 End Function
 
