@@ -1,7 +1,28 @@
-Sub mainname()
+Sub mainnameSht1()
+    
+    Call abc
+    
+    If Sheets(1).Cells(4, 6).Value >= Sheets(1).Cells(43, 6).Value Then
+        Sheets(1).Cells(16, 23).Value = Sheets(1).Cells(4, 6).Value
+    ElseIf Sheets(1).Cells(4, 6).Value < Sheets(1).Cells(43, 6).Value Then
+        Sheets(1).Cells(16, 23).Value = Sheets(1).Cells(4, 6).Value
+    End If
     
     
+End Sub
+
+Sub mainnnameSht2()
+    Call EFG
     
+    With Sheets(2)
+        If Cells(4, 7).Value >= Cells(42, 7).Value Then
+            Cells(8, 24).Value = Cells(4, 7)
+        ElseIf Cells(4, 7).Value < Cells(42, 7).Value Then
+            Cells(8, 24).Value = Cells(42, 7)
+        End If
+    End With
+    
+
 End Sub
 
 'rate per buildig price(sheets(1))
@@ -232,10 +253,10 @@ Sub myMerge()
     
     Dim cl As Integer
     
-    cl = 9
+    cl = 10
     
     With Sheets(1)
-        Set pts(0) = Range(Cells(45, cl), Cells(54, cl))
+        Set pts(0) = Range(Cells(44, cl), Cells(53, cl))
     End With
     
     For Each pt In pts(0)
