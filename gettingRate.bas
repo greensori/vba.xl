@@ -7,7 +7,6 @@ End Sub
 'rate per buildig price(sheets(1))
 Sub abc()
     Dim clt As New Collection
-    Dim inputdata As Long
     
     Dim rwReceive As Integer
     Dim clReceive As Integer
@@ -28,17 +27,11 @@ Sub abc()
     
 End Sub
 
-'rate per person
-Sub efg()
-
-
-End Sub
-
 '0 = X, 1 = x1, 2 = x2, 3 = y1, 4 = y2
 '0 = X, 1 = rw, 2 = cl
 Function finalRate(ParamArray par() As Variant) As Double
     Dim pt(2) As Range
-    Dim temp(4) As Double
+    Dim temp(5) As Double
     
     Set pt(0) = Sheets(1).Cells(par(1), par(2))
     
@@ -108,16 +101,16 @@ Function clGetRate(ParamArray par() As Variant) As Integer
     End If
 End Function
 
-'getrw(sheetsno, startrwonuber, inputdata)
+'getrw(sheetsno, startrwonuber, inputdata, colnumber)
 'now input row number is 17
 Function getrw(ParamArray par() As Variant) As Integer
     Dim pts(1) As Range
     Dim pt As Range
     
     'for using return obs number
-    Dim rwReturn As Integer
+    Dim rwreturn As Integer
     
-    rwReturn = (par(1) - 1)
+    rwreturn = (par(1) - 1)
     
     'par(0) is sheets number
     'par(1) is start obs number of range pts(0)
@@ -127,9 +120,9 @@ Function getrw(ParamArray par() As Variant) As Integer
 
     'par(2) is inputdata, this data must return obs number of pts(0) range
     For Each pt In pts(0)
-        rwReturn = (rwReturn + 1)
+        rwreturn = (rwreturn + 1)
         If par(2) > pt And par(2) < pt.Offset(1, 0) Then
-            getrw = rwReturn
+            getrw = rwreturn
         End If
     Next
 
@@ -149,6 +142,82 @@ Function erow(Optional n = 1, Optional m = 1) As Double
     erow = Sheets(n).Cells(Rows.Count, m).End(xlUp).Row
 
 End Function
+
+
+Sub EFG()
+    Dim rwReceive As Integer
+    Dim clReceive As Integer
+
+    Dim NumReceive As Double
+    
+    Dim resultY As Double
+    
+    NumReceive = inputnumber(2, 4, 7)
+        
+    rwReceive = getrwEFG(2, 16, NumReceive)
+    MsgBox rwReceive
+    resultY = finalRateEFG(NumReceive, rwReceive, inputStringData(2, 4, 11))
+    MsgBox resultY
+    
+End Sub
+
+Function getrwEFG(ParamArray par() As Variant) As Integer
+    Dim pts(1) As Range
+    Dim pt As Range
+    
+    'for using return obs number
+    Dim rwreturn As Integer
+    
+    rwreturn = (par(1) - 1)
+    
+    'par(0) is sheets number
+    'par(1) is start obs number of range pts(0)
+    
+    'range must set lower than (maximum range - 1)
+    Set pts(0) = Range(Sheets(par(0)).Cells(par(1), 3), Sheets(par(0)).Cells((par(1) + 15), 3))
+
+    'par(2) is inputdata, this data must return obs number of pts(0) range
+    For Each pt In pts(0)
+        rwreturn = (rwreturn + 1)
+        If par(2) > pt And par(2) < pt.Offset(1, 0) Then
+            getrwEFG = rwreturn
+        End If
+    Next
+
+End Function
+
+'0 = X, 1 = rw, 2 = string
+Function finalRateEFG(ParamArray par() As Variant) As Double
+    Dim temp(5) As Double
+    Dim str As String
+    
+    Dim offsetno As Integer
+    
+    Dim pt As Range
+    
+    str = Mid(par(2), 2, 2)
+    
+    If str = "3종" Then
+        offsetno = 2
+    ElseIf str = "2종" Then
+        offsetno = 3
+    ElseIf str = "1종" Then
+        offsetno = 4
+    End If
+
+    Set pt = Sheets(2).Cells(par(1), 3)
+    
+    temp(0) = par(0) - pt
+    temp(1) = pt.Offset(, offsetno) - pt.Offset(1, offsetno)
+    temp(2) = pt.Offset(1, 0) - pt
+    temp(3) = ((temp(0) * temp(1)) / temp(2))
+    finalRateEFG = pt.Offset(, offsetno) - temp(3)
+    
+
+
+End Function
+
+
 
 
 Sub myMerge()
