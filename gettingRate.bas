@@ -11,17 +11,48 @@ Sub abc()
     Dim rwReceive As Integer
     Dim clReceive As Integer
     
-    rwReceive = getrw(1, 17, inputnumber(1, 4, 6))
+    Dim NumReceive As Long
+    Dim resultY As Double
+    
+    NumReceive = inputnumber(1, 4, 6)
+    
+    'getrw(sheet, start obs, inputnumber
+    rwReceive = getrw(1, 17, NumReceive)
+    'getrate(clnumber, inputstr_this must 4 lengh string
     clReceive = getrate(4, inputStringData(1, 4, 9))
     
+    resultY = finalRate(NumReceive, rwReceive, clReceive)
+    MsgBox resultY
+    'complete getting rw, cl
     
-    
-    MsgBox clReceive
 End Sub
 
 Sub efg()
     MsgBox "seconds calc"
 End Sub
+
+'0 = X, 1 = x1, 2 = x2, 3 = y1, 4 = y2
+'0 = X, 1 = rw, 2 = cl
+Function finalRate(ParamArray par() As Variant) As Double
+    Dim pt(2) As Range
+    Dim temp(4) As Double
+    
+    Set pt(0) = Sheets(1).Cells(par(1), par(2))
+    
+    temp(0) = (pt(0) - pt(0).Offset(1, 0))
+    
+    Set pt(1) = Sheets(1).Cells(par(1), 2)
+    
+    temp(1) = par(0) - pt(1).Value
+    
+    temp(2) = (temp(0) * temp(1))
+    temp(4) = pt(1).Offset(1, 0) - pt(1)
+    
+    finalRate = pt(0) - (temp(2) / temp(4))
+    
+    
+    
+End Function
 
 Function inputStringData(ParamArray par() As Variant) As String
     inputStringData = Sheets(par(0)).Cells(par(1), par(2)).Value
@@ -134,4 +165,13 @@ Sub myMerge()
         Range(pt, pt.Offset(, 2)).Merge
     Next
 
+End Sub
+
+Sub rwHeight()
+
+    Dim pts(1) As Range
+    Sheets(1).Cells(1, 32).Value = "3"
+    
+    Set pts(0) = Range(Sheets(1).Cells(3, 32), Sheets(1).Cells(25, 42))
+    pts(0).RowHeight = 20
 End Sub
