@@ -1,3 +1,5 @@
+
+
 Sub mainnameSht1()
     
     Call abc
@@ -35,17 +37,20 @@ Sub abc()
     Dim NumReceive As Double
     Dim resultY As Double
     
-    NumReceive = inputnumber(1, 4, 6)
+    NumReceive = inputnumber(1, 5, 3)
     
     'getrw(sheet, start obs, inputnumber
     rwReceive = getrw(1, 17, NumReceive)
     'getrate(clnumber, inputstr_this must 4 lengh string
-    clReceive = getrate(4, inputStringData(1, 4, 9))
+    clReceive = getrate(4, inputStringData(1, 6, 3))
     
 
     resultY = finalRate(NumReceive, rwReceive, clReceive)
-    Sheets(1).Cells(8, 15).Value = resultY & "%"
-    Sheets(1).Cells(16, 23).Value = NumReceive * (resultY * 0.01)
+    'this represent multiple rate coef_
+    Sheets(1).Cells(7, 3).Value = resultY & "%"
+    MsgBox "my result:" & NumReceive * (resultY * 0.01)
+    'below line represent result of total value
+    'Sheets(1).Cells(16, 23).Value = NumReceive * (resultY * 0.01)
     'MsgBox resultY
     'complete getting rw, cl
     'Sheets(1).Cells(1, 23).Value = "t"
@@ -182,7 +187,8 @@ Sub EFG()
     resultY = finalRateEFG(NumReceive, rwReceive, inputStringData(2, 4, 11))
     
     Debug.Print "resultY value:" & resultY
-    Sheets(2).Cells(8, 24).Value = (NumReceive * (resultY / 100))
+    'below line represent result of EFG proc
+    'Sheets(2).Cells(8, 24).Value = (NumReceive * (resultY / 100))
     'Sheets(2).Cells(1, 24).Value = "t"
 End Sub
 
@@ -253,14 +259,14 @@ Sub myMerge()
     
     Dim cl As Integer
     
-    cl = 10
+    cl = 7
     
     With Sheets(1)
-        Set pts(0) = Range(Cells(44, cl), Cells(53, cl))
+        Set pts(0) = Range(Cells(46, cl), Cells(54, cl))
     End With
     
     For Each pt In pts(0)
-        Range(pt, pt.Offset(, 2)).Merge
+        Range(pt, pt.Offset(, 1)).Merge
     Next
 
 End Sub
@@ -268,10 +274,21 @@ End Sub
 Sub rwHeight()
 
     Dim pts(1) As Range
-    Sheets(1).Cells(1, 32).Value = "3"
+    Sheets(1).Cells(2, 26).Value = "3"
     
-    Set pts(0) = Range(Sheets(1).Cells(3, 32), Sheets(1).Cells(25, 42))
-    pts(0).RowHeight = 20
+    Set pts(0) = Range(Sheets(1).Cells(59, 1), Sheets(1).Cells(59, 100))
+    pts(0).RowHeight = 17
+End Sub
+
+Sub clwidhth()
+
+End Sub
+
+Sub restrictedWord()
+
+    Dim clt As New Collection
+
+    
 End Sub
 
 Sub dateFormatChanger()
