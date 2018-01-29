@@ -21,11 +21,13 @@ Sub abc()
     'getrate(clnumber, inputstr_this must 4 lengh string
     clReceive = getrate(4, inputStringData(1, 4, 9))
     
+
     resultY = finalRate(NumReceive, rwReceive, clReceive)
-    Sheets(1).Cells(5, 9).Value = NumReceive * (resultY * 0.01)
+    Sheets(1).Cells(8, 15).Value = resultY & "%"
+    Sheets(1).Cells(16, 23).Value = NumReceive * (resultY * 0.01)
     'MsgBox resultY
     'complete getting rw, cl
-    
+    'Sheets(1).Cells(1, 23).Value = "t"
 End Sub
 
 '0 = X, 1 = x1, 2 = x2, 3 = y1, 4 = y2
@@ -159,7 +161,8 @@ Sub EFG()
     resultY = finalRateEFG(NumReceive, rwReceive, inputStringData(2, 4, 11))
     
     Debug.Print "resultY value:" & resultY
-    Sheets(2).Cells(5, 11).Value = (NumReceive * (resultY / 100))
+    Sheets(2).Cells(8, 24).Value = (NumReceive * (resultY / 100))
+    'Sheets(2).Cells(1, 24).Value = "t"
 End Sub
 
 Function getrwEFG(ParamArray par() As Variant) As Integer
