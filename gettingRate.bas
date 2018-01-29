@@ -4,6 +4,7 @@ Sub mainname()
     
 End Sub
 
+'rate per buildig price(sheets(1))
 Sub abc()
     Dim clt As New Collection
     Dim inputdata As Long
@@ -11,7 +12,7 @@ Sub abc()
     Dim rwReceive As Integer
     Dim clReceive As Integer
     
-    Dim NumReceive As Long
+    Dim NumReceive As Double
     Dim resultY As Double
     
     NumReceive = inputnumber(1, 4, 6)
@@ -27,8 +28,10 @@ Sub abc()
     
 End Sub
 
+'rate per person
 Sub efg()
-    MsgBox "seconds calc"
+
+
 End Sub
 
 '0 = X, 1 = x1, 2 = x2, 3 = y1, 4 = y2
@@ -59,7 +62,7 @@ Function inputStringData(ParamArray par() As Variant) As String
 
 End Function
 
-Function inputnumber(ParamArray par() As Variant) As Long
+Function inputnumber(ParamArray par() As Variant) As Double
     inputnumber = Sheets(par(0)).Cells(par(1), par(2)).Value
 
 End Function
@@ -127,7 +130,6 @@ Function getrw(ParamArray par() As Variant) As Integer
         rwReturn = (rwReturn + 1)
         If par(2) > pt And par(2) < pt.Offset(1, 0) Then
             getrw = rwReturn
-            MsgBox getrw
         End If
     Next
 
