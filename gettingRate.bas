@@ -1,3 +1,6 @@
+Sub Auto_Open()
+    Application.OnKey "~", "myauto"
+End Sub
 
 
 Sub mainnameSht1()
