@@ -5,24 +5,69 @@ Sub Auto_Open()
 
 End Sub
 
+Sub sht1print()
+    Dim clt As New Collection
+    Dim pt As Range
+    Dim vari As Variant
+    
+    With Sheets(1)
+        Set pt = Range(Cells(3, 2), Cells(62, 13))
+        clt.Add pt
+        Set pt = Range(Cells(3, 16), Cells(63, 24))
+        clt.Add pt
+        Set pt = Range(Cells(3, 29), Cells(44, 38))
+        clt.Add pt
+    End With
 
+    For Each vari In clt
+        vari.PrintOut
+    Next
+    
+End Sub
 
+Sub sht2print()
+    Dim clt As New Collection
+    Dim vari As Variant
+    Dim pt As Range
+    
+    With Sheets(2)
+        Set pt = Range(Cells(3, 3), Cells(57, 13))
+        clt.Add pt
+        Set pt = Range(Cells(3, 17), Cells(47, 26))
+        clt.Add pt
+        Set pt = Range(Cells(3, 29), Cells(44, 38))
+        clt.Add pt
+    End With
+    
+    For Each vari In clt
+        vari.PrintOut
+    Next
 
+End Sub
+
+Sub goprint()
+    Dim pt As Range
+    
+    Set pt = Range(Sheets(1).Cells(3, 29), Sheets(1).Cells(44, 38))
+    
+    'pt.PrintPreview
+    pt.PrintOut
+End Sub
 Sub mainname()
     
     Call abc
     Call EFG
     
-    If Sheets(1).Cells(12, 4).Value >= Sheets(1).Cells(41, 4).Value Then
-        Sheets(1).Cells(10, 21).Value = Sheets(1).Cells(12, 4).Value
-    ElseIf Sheets(1).Cells(12, 4).Value < Sheets(1).Cells(41, 4).Value Then
-        Sheets(1).Cells(10, 21).Value = Sheets(1).Cells(41, 4).Value
+    If Sheets(1).Cells(14, 4).Value >= Sheets(1).Cells(44, 4).Value Then
+        Sheets(1).Cells(11, 21).Value = Sheets(1).Cells(14, 4).Value
+    ElseIf Sheets(1).Cells(14, 4).Value < Sheets(1).Cells(44, 4).Value Then
+        Sheets(1).Cells(11, 21).Value = Sheets(1).Cells(44, 4).Value
     End If
     
-    If Sheets(2).Cells(12, 5).Value >= Sheets(2).Cells(40, 5).Value Then
-        Sheets(2).Cells(9, 23).Value = Sheets(2).Cells(12, 5).Value
-    ElseIf Sheets(2).Cells(12, 5).Value < Sheets(2).Cells(40, 5).Value Then
-        Sheets(2).Cells(9, 23).Value = Sheets(2).Cells(40, 5).Value
+    If Sheets(2).Cells(14, 5).Value >= Sheets(2).Cells(43, 5).Value Then
+        Sheets(2).Cells(11, 23).Value = Sheets(2).Cells(14, 5).Value
+    ElseIf Sheets(2).Cells(14, 5).Value < Sheets(2).Cells(43, 5).Value Then
+        Sheets(2).Cells(11, 23).Value = Sheets(2).Cells(43, 5).Value
     End If
     
     
@@ -54,11 +99,13 @@ Sub abc()
     
     Dim NumReceive As Double
     Dim resultY As Double
-
+    
+    
     NumReceive = inputnumber(1, 6, 3)
     'getrw(sheet, start obs, inputnumber
     'add a same value result
-    rwReceive = getrw(1, 18, NumReceive)
+    'if raw dataset will be changing then modified below line
+    rwReceive = getrw(1, 20, NumReceive)
     'getrate(clnumber, inputstr_this must 4 lengh string
     clReceive = getrate(4, inputStringData(1, 7, 3))
     
@@ -66,7 +113,7 @@ Sub abc()
         resultY = finalRate(NumReceive, rwReceive, clReceive)
         'this represent multiple rate coef_
         Sheets(1).Cells(8, 3).Value = resultY & "%"
-        Sheets(1).Cells(12, 4).Value = NumReceive * (resultY * 0.01)
+        Sheets(1).Cells(14, 4).Value = NumReceive * (resultY * 0.01)
         'below line represent result of total value
         'Sheets(1).Cells(16, 23).Value = NumReceive * (resultY * 0.01)
         'MsgBox resultY
@@ -75,7 +122,7 @@ Sub abc()
     ElseIf NumReceive = Sheets(1).Cells(rwReceive, 2) Then
         'below 2lines are working woth same value with input value
         Sheets(1).Cells(8, 3).Value = Sheets(1).Cells(rwReceive, clReceive).Value & "%"
-        Sheets(1).Cells(12, 4).Value = NumReceive * (Sheets(1).Cells(8, 3).Value)
+        Sheets(1).Cells(14, 4).Value = NumReceive * (Sheets(1).Cells(8, 3).Value)
     End If
 End Sub
 
@@ -206,12 +253,12 @@ Sub EFG()
     
     NumReceive = inputnumber(2, 6, 4)
         
-    rwReceive = getrwEFG(2, 17, NumReceive)
+    rwReceive = getrwEFG(2, 19, NumReceive)
     'construction rate is entered in proc finalRAteEFG
     resultY = finalRateEFG(NumReceive, rwReceive, inputStringData(2, 7, 4))
     
     Sheets(2).Cells(8, 4).Value = resultY & "%"
-    Sheets(2).Cells(12, 5).Value = NumReceive * (resultY * 0.01)
+    Sheets(2).Cells(14, 5).Value = NumReceive * (resultY * 0.01)
     
     'below line represent result of EFG proc
     'Sheets(2).Cells(8, 24).Value = (NumReceive * (resultY / 100))
@@ -274,8 +321,6 @@ Function finalRateEFG(ParamArray par() As Variant) As Double
     ElseIf par(0) = pt Then
         finalRateEFG = pt.Offset(0, offsetno)
     End If
-    Debug.Print "standard:" & pt
-    Debug.Print "offset result2:" & (pt.Offset(0, offsetno) - pt.Offset(1, offsetno))
 
 End Function
 
@@ -288,10 +333,10 @@ Sub myMerge()
     
     Dim cl As Integer
     
-    cl = 8
+    cl = 2
     
     With Sheets(1)
-        Set pts(0) = Range(Cells(43, cl), Cells(52, cl))
+        Set pts(0) = Range(Cells(20, cl), Cells(36, cl))
     End With
     
     For Each pt In pts(0)
