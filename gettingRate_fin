@@ -20,9 +20,9 @@ Sub mainname()
     End If
     
     If Sheets(2).Cells(12, 5).Value >= Sheets(2).Cells(40, 5).Value Then
-    
+        Sheets(2).Cells(9, 23).Value = Sheets(2).Cells(12, 5).Value
     ElseIf Sheets(2).Cells(12, 5).Value < Sheets(2).Cells(40, 5).Value Then
-    
+        Sheets(2).Cells(9, 23).Value = Sheets(2).Cells(40, 5).Value
     End If
     
     
