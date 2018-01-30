@@ -19,7 +19,12 @@ Sub mainname()
         Sheets(1).Cells(10, 21).Value = Sheets(1).Cells(41, 4).Value
     End If
     
-    'if Sheets(2).Cells(12, 5).Value >= Sheets(2).Cells(
+    If Sheets(2).Cells(12, 5).Value >= Sheets(2).Cells(40, 5).Value Then
+    
+    ElseIf Sheets(2).Cells(12, 5).Value < Sheets(2).Cells(40, 5).Value Then
+    
+    End If
+    
     
     
 End Sub
