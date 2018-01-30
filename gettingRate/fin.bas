@@ -48,7 +48,7 @@ End Sub
 Sub goprint()
     Dim pt As Range
     
-    Set pt = Range(Sheets(1).Cells(3, 29), Sheets(1).Cells(44, 38))
+    Set pt = Range(Sheets(2).Cells(3, 31), Sheets(2).Cells(44, 39))
     
     'pt.PrintPreview
     pt.PrintOut
