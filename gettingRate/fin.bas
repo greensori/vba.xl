@@ -11,7 +11,7 @@ Sub sht1print()
     Dim vari As Variant
     
     With Sheets(1)
-        Set pt = Range(Cells(3, 2), Cells(62, 13))
+        Set pt = Range(Cells(3, 2), Cells(62, 12))
         clt.Add pt
         Set pt = Range(Cells(3, 16), Cells(63, 24))
         clt.Add pt
@@ -31,11 +31,11 @@ Sub sht2print()
     Dim pt As Range
     
     With Sheets(2)
-        Set pt = Range(Cells(3, 3), Cells(57, 13))
+        Set pt = Range(Cells(3, 3), Cells(61, 13))
         clt.Add pt
         Set pt = Range(Cells(3, 17), Cells(47, 26))
         clt.Add pt
-        Set pt = Range(Cells(3, 29), Cells(44, 38))
+        Set pt = Range(Cells(3, 29), Cells(44, 39))
         clt.Add pt
     End With
     
@@ -47,30 +47,39 @@ End Sub
 
 Sub goprint()
     Dim pt As Range
+    'Cells(3, 29), Cells(44, 38)
+    'Set pt = Range(Sheets(2).Cells(3, 3), Sheets(2).Cells(61, 13))
     
     Set pt = Range(Sheets(2).Cells(3, 31), Sheets(2).Cells(44, 39))
-    
     'pt.PrintPreview
     pt.PrintOut
 End Sub
 Sub mainname()
     
-    Call abc
-    Call EFG
+    Dim limit As Double
     
-    If Sheets(1).Cells(14, 4).Value >= Sheets(1).Cells(44, 4).Value Then
-        Sheets(1).Cells(11, 21).Value = Sheets(1).Cells(14, 4).Value
-    ElseIf Sheets(1).Cells(14, 4).Value < Sheets(1).Cells(44, 4).Value Then
-        Sheets(1).Cells(11, 21).Value = Sheets(1).Cells(44, 4).Value
+    
+    'limit = Sheets(3).Cells(1, 1).Value
+    limit = 500000000000#
+
+
+    If inputnumber(1, 6, 3) < limit Then
+        Call abc
+        If Sheets(1).Cells(14, 4).Value >= Sheets(1).Cells(44, 4).Value Then
+            Sheets(1).Cells(11, 21).Value = Sheets(1).Cells(14, 4).Value
+        ElseIf Sheets(1).Cells(14, 4).Value < Sheets(1).Cells(44, 4).Value Then
+            Sheets(1).Cells(11, 21).Value = Sheets(1).Cells(44, 4).Value
+        End If
     End If
-    
-    If Sheets(2).Cells(14, 5).Value >= Sheets(2).Cells(43, 5).Value Then
-        Sheets(2).Cells(11, 23).Value = Sheets(2).Cells(14, 5).Value
-    ElseIf Sheets(2).Cells(14, 5).Value < Sheets(2).Cells(43, 5).Value Then
-        Sheets(2).Cells(11, 23).Value = Sheets(2).Cells(43, 5).Value
+
+    If inputnumber(2, 6, 4) < limit Then
+        Call EFG
+        If Sheets(2).Cells(14, 5).Value >= Sheets(2).Cells(43, 5).Value Then
+            Sheets(2).Cells(11, 23).Value = Sheets(2).Cells(14, 5).Value
+        ElseIf Sheets(2).Cells(14, 5).Value < Sheets(2).Cells(43, 5).Value Then
+            Sheets(2).Cells(11, 23).Value = Sheets(2).Cells(43, 5).Value
+        End If
     End If
-    
-    
     
 End Sub
 
