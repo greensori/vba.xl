@@ -48,9 +48,17 @@ End Sub
 Sub goprint()
     Dim pt As Range
     'Cells(3, 29), Cells(44, 38)
-    'Set pt = Range(Sheets(2).Cells(3, 3), Sheets(2).Cells(61, 13))
+    'below line print sheet2.dataset3
+    'Set pt = Range(Sheets(2).Cells(3, 3), Sheets(2).Cells(62, 13))
+    Set pt = Range(Sheets(2).Cells(3, 17), Sheets(2).Cells(67, 26))
+    'Set pt = Range(Sheets(2).Cells(3, 31), Sheets(2).Cells(44, 41))
     
-    Set pt = Range(Sheets(2).Cells(3, 31), Sheets(2).Cells(44, 39))
+    'maximun print range(sheet1 and dataset 2
+    'Set pt = Range(Sheets(1).Cells(3, 16), Sheets(1).Cells(68, 24))
+    'dataset1
+    'Set pt = Range(Sheets(1).Cells(3, 2), Sheets(1).Cells(63, 12))
+    'sht1 dataset3
+    'Set pt = Range(Sheets(1).Cells(3, 29), Sheets(1).Cells(44, 38))
     'pt.PrintPreview
     pt.PrintOut
 End Sub
@@ -63,21 +71,21 @@ Sub mainname()
     limit = 500000000000#
 
 
-    If inputnumber(1, 6, 3) < limit Then
+    If inputnumber(1, 6, 3) < limit And inputnumber(1, 6, 3) >= 50000000 Then
         Call abc
-        If Sheets(1).Cells(14, 4).Value >= Sheets(1).Cells(44, 4).Value Then
-            Sheets(1).Cells(11, 21).Value = Sheets(1).Cells(14, 4).Value
-        ElseIf Sheets(1).Cells(14, 4).Value < Sheets(1).Cells(44, 4).Value Then
-            Sheets(1).Cells(11, 21).Value = Sheets(1).Cells(44, 4).Value
+        If Sheets(1).Cells(11, 4).Value >= Sheets(1).Cells(45, 4).Value Then
+            Sheets(1).Cells(16, 21).Value = Sheets(1).Cells(11, 4).Value
+        ElseIf Sheets(1).Cells(11, 4).Value < Sheets(1).Cells(45, 4).Value Then
+            Sheets(1).Cells(16, 21).Value = Sheets(1).Cells(45, 4).Value
         End If
     End If
 
-    If inputnumber(2, 6, 4) < limit Then
+    If inputnumber(2, 6, 4) < limit And inputnumber(2, 6, 4) >= 50000000 Then
         Call EFG
-        If Sheets(2).Cells(14, 5).Value >= Sheets(2).Cells(43, 5).Value Then
-            Sheets(2).Cells(11, 23).Value = Sheets(2).Cells(14, 5).Value
-        ElseIf Sheets(2).Cells(14, 5).Value < Sheets(2).Cells(43, 5).Value Then
-            Sheets(2).Cells(11, 23).Value = Sheets(2).Cells(43, 5).Value
+        If Sheets(2).Cells(11, 5).Value >= Sheets(2).Cells(43, 5).Value Then
+            Sheets(2).Cells(15, 23).Value = Sheets(2).Cells(11, 5).Value
+        ElseIf Sheets(2).Cells(11, 5).Value < Sheets(2).Cells(43, 5).Value Then
+            Sheets(2).Cells(15, 23).Value = Sheets(2).Cells(43, 5).Value
         End If
     End If
     
@@ -114,7 +122,7 @@ Sub abc()
     'getrw(sheet, start obs, inputnumber
     'add a same value result
     'if raw dataset will be changing then modified below line
-    rwReceive = getrw(1, 20, NumReceive)
+    rwReceive = getrw(1, 18, NumReceive)
     'getrate(clnumber, inputstr_this must 4 lengh string
     clReceive = getrate(4, inputStringData(1, 7, 3))
     
@@ -122,7 +130,7 @@ Sub abc()
         resultY = finalRate(NumReceive, rwReceive, clReceive)
         'this represent multiple rate coef_
         Sheets(1).Cells(8, 3).Value = resultY & "%"
-        Sheets(1).Cells(14, 4).Value = NumReceive * (resultY * 0.01)
+        Sheets(1).Cells(11, 4).Value = NumReceive * (resultY * 0.01)
         'below line represent result of total value
         'Sheets(1).Cells(16, 23).Value = NumReceive * (resultY * 0.01)
         'MsgBox resultY
@@ -131,7 +139,7 @@ Sub abc()
     ElseIf NumReceive = Sheets(1).Cells(rwReceive, 2) Then
         'below 2lines are working woth same value with input value
         Sheets(1).Cells(8, 3).Value = Sheets(1).Cells(rwReceive, clReceive).Value & "%"
-        Sheets(1).Cells(14, 4).Value = NumReceive * (Sheets(1).Cells(8, 3).Value)
+        Sheets(1).Cells(11, 4).Value = NumReceive * (Sheets(1).Cells(8, 3).Value)
     End If
 End Sub
 
@@ -262,12 +270,12 @@ Sub EFG()
     
     NumReceive = inputnumber(2, 6, 4)
         
-    rwReceive = getrwEFG(2, 19, NumReceive)
+    rwReceive = getrwEFG(2, 17, NumReceive)
     'construction rate is entered in proc finalRAteEFG
     resultY = finalRateEFG(NumReceive, rwReceive, inputStringData(2, 7, 4))
     
     Sheets(2).Cells(8, 4).Value = resultY & "%"
-    Sheets(2).Cells(14, 5).Value = NumReceive * (resultY * 0.01)
+    Sheets(2).Cells(11, 5).Value = NumReceive * (resultY * 0.01)
     
     'below line represent result of EFG proc
     'Sheets(2).Cells(8, 24).Value = (NumReceive * (resultY / 100))
@@ -357,10 +365,11 @@ End Sub
 Sub rwHeight()
 
     Dim pts(1) As Range
-    Sheets(1).Cells(2, 26).Value = "3"
     
-    Set pts(0) = Range(Sheets(1).Cells(59, 1), Sheets(1).Cells(59, 100))
-    pts(0).RowHeight = 17
+    Set pts(0) = Range(Sheets(2).Cells(6, 1), Sheets(2).Cells(88, 100))
+    pts(0).RowHeight = 22
+    
+    'Call goprint
 End Sub
 
 Sub clwidhth()
