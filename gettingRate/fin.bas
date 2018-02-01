@@ -5,23 +5,24 @@ Sub Auto_Open()
 
 End Sub
 
+
+
 Sub sht1print()
     Dim clt As New Collection
     Dim pt As Range
     Dim vari As Variant
     
-    With Sheets(1)
-        Set pt = Range(Cells(3, 2), Cells(62, 12))
-        clt.Add pt
-        Set pt = Range(Cells(3, 16), Cells(63, 24))
-        clt.Add pt
-        Set pt = Range(Cells(3, 29), Cells(44, 38))
-        clt.Add pt
-    End With
-
-    For Each vari In clt
-        vari.PrintOut
-    Next
+    Set pt = Range(Sheets(1).Cells(3, 16), Sheets(1).Cells(68, 24))
+    pt.PrintOut
+    'dataset1
+    Set pt = Range(Sheets(1).Cells(3, 2), Sheets(1).Cells(63, 12))
+    'sht1 dataset3
+    pt.PrintOut
+    Set pt = Range(Sheets(1).Cells(3, 29), Sheets(1).Cells(44, 38))
+    pt.PrintOut
+    'For Each vari In clt
+    '    vari.PrintOut
+    'Next
     
 End Sub
 
@@ -30,18 +31,16 @@ Sub sht2print()
     Dim vari As Variant
     Dim pt As Range
     
-    With Sheets(2)
-        Set pt = Range(Cells(3, 3), Cells(61, 13))
-        clt.Add pt
-        Set pt = Range(Cells(3, 17), Cells(47, 26))
-        clt.Add pt
-        Set pt = Range(Cells(3, 29), Cells(44, 39))
-        clt.Add pt
-    End With
+    Set pt = Range(Sheets(2).Cells(3, 3), Sheets(2).Cells(62, 13))
+    pt.PrintOut
+    Set pt = Range(Sheets(2).Cells(3, 17), Sheets(2).Cells(67, 26))
+    pt.PrintOut
+    Set pt = Range(Sheets(2).Cells(3, 31), Sheets(2).Cells(44, 41))
+    pt.PrintOut
     
-    For Each vari In clt
-        vari.PrintOut
-    Next
+    'For Each vari In clt
+    '    vari.PrintOut
+    'Next
 
 End Sub
 
@@ -50,7 +49,7 @@ Sub goprint()
     'Cells(3, 29), Cells(44, 38)
     'below line print sheet2.dataset3
     'Set pt = Range(Sheets(2).Cells(3, 3), Sheets(2).Cells(62, 13))
-    Set pt = Range(Sheets(2).Cells(3, 17), Sheets(2).Cells(67, 26))
+    'Set pt = Range(Sheets(2).Cells(3, 17), Sheets(2).Cells(67, 26))
     'Set pt = Range(Sheets(2).Cells(3, 31), Sheets(2).Cells(44, 41))
     
     'maximun print range(sheet1 and dataset 2
@@ -60,11 +59,16 @@ Sub goprint()
     'sht1 dataset3
     'Set pt = Range(Sheets(1).Cells(3, 29), Sheets(1).Cells(44, 38))
     'pt.PrintPreview
-    pt.PrintOut
+    'pt.PrintOut
 End Sub
 Sub mainname()
     
     Dim limit As Double
+    
+    'if there is changing on data sets then changing following script
+    'checking inputnumber() value
+    'checking getrw() this proc must using 3 or 4
+    'data input lines are located in abc() and EFG() checking output data pt
     
     
     'limit = Sheets(3).Cells(1, 1).Value
@@ -129,6 +133,7 @@ Sub abc()
     If NumReceive <> Sheets(1).Cells(rwReceive, 2) Then
         resultY = finalRate(NumReceive, rwReceive, clReceive)
         'this represent multiple rate coef_
+        resultY = Round(resultY, 2)
         Sheets(1).Cells(8, 3).Value = resultY & "%"
         Sheets(1).Cells(11, 4).Value = NumReceive * (resultY * 0.01)
         'below line represent result of total value
@@ -142,6 +147,8 @@ Sub abc()
         Sheets(1).Cells(11, 4).Value = NumReceive * (Sheets(1).Cells(8, 3).Value)
     End If
 End Sub
+
+
 
 '0 = X, 1 = x1, 2 = x2, 3 = y1, 4 = y2
 '0 = X, 1 = rw, 2 = cl
@@ -171,6 +178,8 @@ Function inputStringData(ParamArray par() As Variant) As String
 
 End Function
 
+
+'NumReceive = inputnumber(1, 6, 3)
 Function inputnumber(ParamArray par() As Variant) As Double
     inputnumber = Sheets(par(0)).Cells(par(1), par(2)).Value
 
@@ -274,6 +283,9 @@ Sub EFG()
     'construction rate is entered in proc finalRAteEFG
     resultY = finalRateEFG(NumReceive, rwReceive, inputStringData(2, 7, 4))
     
+    
+    resultY = Round(resultY, 2)
+    
     Sheets(2).Cells(8, 4).Value = resultY & "%"
     Sheets(2).Cells(11, 5).Value = NumReceive * (resultY * 0.01)
     
@@ -296,7 +308,7 @@ Function getrwEFG(ParamArray par() As Variant) As Integer
     
     'range must set lower than (maximum range - 1)
     Set pts(0) = Range(Sheets(par(0)).Cells(par(1), 3), Sheets(par(0)).Cells((par(1) + 15), 3))
-
+    
     'par(2) is inputdata, this data must return obs number of pts(0) range
     For Each pt In pts(0)
         rwreturn = (rwreturn + 1)
@@ -304,7 +316,7 @@ Function getrwEFG(ParamArray par() As Variant) As Integer
             getrwEFG = rwreturn
         End If
     Next
-
+    
 End Function
 
 '0 = X, 1 = rw, 2 = string
@@ -327,14 +339,18 @@ Function finalRateEFG(ParamArray par() As Variant) As Double
     End If
     'Debug.Print "offsetno:" & offsetno
     
+    'chagine 3 to 4
     Set pt = Sheets(2).Cells(par(1), 3)
     
     If par(0) <> pt Then
-        temp(0) = par(0) - pt
-        temp(1) = ((pt.Offset(0, offsetno) - pt.Offset(1, offsetno)) / 100)
-        temp(2) = pt.Offset(1, 0) - pt
+        temp(0) = par(0) - pt '(X-x2)
+        temp(1) = (pt.Offset(0, offsetno) - pt.Offset(1, offsetno)) '(y1 - y2)
+        'MsgBox temp(1)
+        temp(2) = pt.Offset(1, 0) - pt '(x1 - x2)
+        'MsgBox pt
         temp(3) = ((temp(0) * temp(1)) / temp(2))
         finalRateEFG = pt.Offset(0, offsetno) - temp(3)
+        'MsgBox finalRateEFG
     ElseIf par(0) = pt Then
         finalRateEFG = pt.Offset(0, offsetno)
     End If
