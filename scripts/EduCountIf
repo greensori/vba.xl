@@ -6,7 +6,7 @@ End Sub
 
 Sub mainname()
     If erow(1, 2) > 1 Then
-        If ecol(1, erow(1, 2)) > 2 Then
+        If ecol(1, erow(1, 2)) > 1 Then
             Call abc
         End If
     End If
