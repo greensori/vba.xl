@@ -1,0 +1,66 @@
+
+Sub Auto_Open()
+    Application.OnKey "~", "mainname"
+End Sub
+
+
+Sub mainname()
+    If erow(1, 2) > 1 Then
+        If ecol(1, 2) > 1 Then
+            Call abc
+        End If
+    End If
+
+End Sub
+
+
+
+Sub abc()
+    Dim cl As Integer
+    Dim rw As Integer
+    
+    Dim pts(2) As Range
+    Dim pt As Range
+    
+    rw = erow(1, 2)
+    cl = ecol(1, rw)
+    
+    Set pts(0) = Range(Sheets(1).Cells(2, 2), Sheets(1).Cells(rw, 2))
+    
+    
+    If cl = 2 Then
+        For Each pt In pts(0)
+            pt.Offset(, -1) = Applicaion.WorksheetsFunction.CountIf(pts(0), pt)
+        Next
+    ElseIf cl > 2 Then
+        For Each pt In pts(0)
+            pt.Offset(, cl - 1) = sumStr(pt, cl - 1)
+        Next
+        Set pts(1) = Range(Sheets(1).Cells(2, cl + 1), Sheets(1).Cells(rw, cl + 1))
+        For Each pt In pts(1)
+            pt.Offset(, -cl) = Application.WorksheetFunction.CountIf(pts(1), pt)
+        Next
+        Sheets(1).Cells(1, cl + 1).EntireColumn.Delete
+    End If
+    
+End Sub
+
+Function sumStr(ParamArray mypar() As Variant) As String
+    Dim c As Integer
+    sumStr = mypar(0)
+    
+    For c = 0 To mypar(1)
+        sumStr = sumStr & mypar(0).Offset(, c)
+    Next
+
+End Function
+
+
+Function ecol(Optional n = 1, Optional m = 1) As Double
+    ecol = Sheets(n).Cells(m, Columns.Count).End(xlToLeft).Column
+End Function
+
+
+Function erow(Optional n = 1, Optional m = 1) As Double
+    erow = Sheets(n).Cells(Rows.Count, m).End(xlUp).Row
+End Function
